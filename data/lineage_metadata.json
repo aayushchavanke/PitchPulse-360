@@ -1,0 +1,104 @@
+{
+  "generated_at": "2026-10-15T18:05:42.902519Z",
+  "pipeline": "PitchPulse-360-Full-Lifecycle",
+  "nodes": [
+    {
+      "id": "SRC_STATSBOMB",
+      "label": "StatsBomb GitHub API",
+      "type": "Source"
+    },
+    {
+      "id": "SRC_STREAM",
+      "label": "Kafka Live Match Events",
+      "type": "Source"
+    },
+    {
+      "id": "STAGE_INGEST",
+      "label": "Ingestion & Dead Letter Queue (DLQ)",
+      "type": "Ingestion"
+    },
+    {
+      "id": "LAKE_BRONZE",
+      "label": "Delta Lake: Bronze Layer (Raw Payloads)",
+      "type": "Storage"
+    },
+    {
+      "id": "VAL_QUALITY",
+      "label": "Great Expectations Quality Suite",
+      "type": "Validation"
+    },
+    {
+      "id": "LAKE_SILVER",
+      "label": "Delta Lake: Silver Layer (Cleaned & Schema Enforced)",
+      "type": "Storage"
+    },
+    {
+      "id": "PROC_DUCKDB",
+      "label": "DuckDB / PySpark Distributed Engine",
+      "type": "Compute"
+    },
+    {
+      "id": "LAKE_GOLD",
+      "label": "Delta Lake: Gold Star Schema & KPIs",
+      "type": "Storage"
+    },
+    {
+      "id": "SERV_FASTAPI",
+      "label": "FastAPI Data Product & RBAC",
+      "type": "Serving"
+    },
+    {
+      "id": "BI_STREAMLIT",
+      "label": "Streamlit Tactical Match Center",
+      "type": "Analytics"
+    }
+  ],
+  "edges": [
+    {
+      "from": "SRC_STATSBOMB",
+      "to": "STAGE_INGEST",
+      "transformation": "HTTP Batch Fetch"
+    },
+    {
+      "from": "SRC_STREAM",
+      "to": "STAGE_INGEST",
+      "transformation": "Real-Time Kafka Consumer"
+    },
+    {
+      "from": "STAGE_INGEST",
+      "to": "LAKE_BRONZE",
+      "transformation": "Append Raw JSON"
+    },
+    {
+      "from": "LAKE_BRONZE",
+      "to": "VAL_QUALITY",
+      "transformation": "Validate Constraints"
+    },
+    {
+      "from": "VAL_QUALITY",
+      "to": "LAKE_SILVER",
+      "transformation": "Filtered Clean Stream"
+    },
+    {
+      "from": "LAKE_SILVER",
+      "to": "PROC_DUCKDB",
+      "transformation": "Columnar SQL Transforms"
+    },
+    {
+      "from": "PROC_DUCKDB",
+      "to": "LAKE_GOLD",
+      "transformation": "Aggregate KPIs & Star Schema"
+    },
+    {
+      "from": "LAKE_GOLD",
+      "to": "SERV_FASTAPI",
+      "transformation": "Query Serving Layer"
+    },
+    {
+      "from": "SERV_FASTAPI",
+      "to": "BI_STREAMLIT",
+      "transformation": "Tactical Visualization"
+    }
+  ],
+  "mermaid": "graph TD\n    SRC_STATSBOMB[\"StatsBomb GitHub API\"]\n    SRC_STREAM[\"Kafka Live Match Events\"]\n    STAGE_INGEST[\"Ingestion & Dead Letter Queue (DLQ)\"]\n    LAKE_BRONZE[\"Delta Lake: Bronze Layer (Raw Payloads)\"]\n    VAL_QUALITY[\"Great Expectations Quality Suite\"]\n    LAKE_SILVER[\"Delta Lake: Silver Layer (Cleaned & Schema Enforced)\"]\n    PROC_DUCKDB[\"DuckDB / PySpark Distributed Engine\"]\n    LAKE_GOLD[\"Delta Lake: Gold Star Schema & KPIs\"]\n    SERV_FASTAPI[\"FastAPI Data Product & RBAC\"]\n    BI_STREAMLIT[\"Streamlit Tactical Match Center\"]\n    SRC_STATSBOMB -->|HTTP Batch Fetch| STAGE_INGEST\n    SRC_STREAM -->|Real-Time Kafka Consumer| STAGE_INGEST\n    STAGE_INGEST -->|Append Raw JSON| LAKE_BRONZE\n    LAKE_BRONZE -->|Validate Constraints| VAL_QUALITY\n    VAL_QUALITY -->|Filtered Clean Stream| LAKE_SILVER\n    LAKE_SILVER -->|Columnar SQL Transforms| PROC_DUCKDB\n    PROC_DUCKDB -->|Aggregate KPIs & Star Schema| LAKE_GOLD\n    LAKE_GOLD -->|Query Serving Layer| SERV_FASTAPI\n    SERV_FASTAPI -->|Tactical Visualization| BI_STREAMLIT"
+}

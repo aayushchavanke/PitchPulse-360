@@ -1,0 +1,18 @@
+# PitchPulse 360 Dependencies
+duckdb>=0.10.0
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=14.0.0
+deltalake>=0.17.0
+fastapi>=0.110.0
+uvicorn>=0.28.0
+pydantic>=2.6.0
+streamlit>=1.32.0
+plotly>=5.19.0
+requests>=2.31.0
+matplotlib>=3.8.0
+scipy>=1.11.0
+reportlab>=4.0.0
+python-multipart>=0.0.9
+tabulate>=0.9.0
+pytest>=8.0.0
