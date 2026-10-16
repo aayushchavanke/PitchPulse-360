@@ -1,3 +1,5 @@
+> Historical report supplied in the original ZIP. Some claims are inaccurate. Use WORKFLOW_GUIDE.md and results/verification.json for the current implementation.
+
 # PitchPulse 360: European Football Analytics & Telemetry Lakehouse
 **Practical Case Study & Technical Project Report**  
 *Department of Artificial Intelligence & Data Science | SIES Graduate School of Technology*  
@@ -279,3 +281,4 @@ PitchPulse 360 proves that a modern data engineering stack—combining Medallion
 
 **Q5: What does DuckDB's EXPLAIN ANALYZE command show?**  
 *Answer:* It details the physical query execution plan, displaying execution time per operator, columnar filter pushdowns, parallel parquet scans, and memory consumption.
+

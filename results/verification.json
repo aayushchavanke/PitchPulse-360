@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "postgres_matches": 10781,
+  "goals": 30186,
+  "postgres_constraints": 11,
+  "mongo_documents": 10781,
+  "completed_prefect_tasks": 11,
+  "prefect_run_id": "01a1412d-46ac-7abf-a026-fac0738f3b0a",
+  "tests": [
+    "PostgreSQL reconciliation",
+    "MongoDB reconciliation",
+    "OLAP engine equality",
+    "stream deduplication and rejection",
+    "metric view/raw equality",
+    "Delta old-version reads and schema rejections",
+    "six-mode equal-result benchmark",
+    "quality gate and intentional failures",
+    "actual Prefect completed flow and eleven tasks"
+  ]
+}

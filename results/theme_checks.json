@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "change": "Use Streamlit native appearance across tables, widgets and Plotly; custom cards inherit native foreground. Removed conflicting CSS-only theme radio.",
+  "checks": [
+    "Streamlit AppTest: football dashboard loads; all five tabs and league/season interactions pass.",
+    "Browser: native Light -> Dark -> Light switches app, table canvas, widgets and chart text together without reload.",
+    "Browser: league dropdown list has readable light background and dark text."
+  ],
+  "light": {
+    "app_background": "rgb(255, 255, 255)",
+    "app_text": "rgb(49, 51, 63)",
+    "table_background": "#ffffff",
+    "table_text": "#31333F"
+  },
+  "dark": {
+    "app_background": "rgb(14, 17, 23)",
+    "app_text": "rgb(250, 250, 250)",
+    "table_background": "#0e1117",
+    "table_text": "#fafafa"
+  },
+  "theme_control": "Top-right menu > Settings > Theme",
+  "final_browser_theme": "Light"
+}

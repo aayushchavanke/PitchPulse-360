@@ -1,0 +1,2 @@
+match_date,home_team,away_team,home_goals,away_goals,result,home_shots,away_shots,home_shots_target,away_shots_target,home_yellows,away_yellows,home_reds,away_reds,league_name,country,season,season_code,source_file,source_row,measurement_repair_notes,match_id,total_goals,home_points,away_points,goal_diff
+2021-08-15,Newcastle,West Ham,2,4,A,17,,3,,1,0,0,0,Premier League,England,2021/2022,2122,E0_2122.csv,10,away target shots exceed shots: both measurements set unknown,faa02b0da581c9c56eaae0ba,6,0,3,-2

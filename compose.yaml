@@ -1,0 +1,94 @@
+name: pitchpulse360
+x-app: &app
+  build: .
+  image: pitchpulse360:complete
+  working_dir: /app
+  environment: &environment
+    PITCHPULSE_POSTGRES_DSN: postgresql://pitchpulse:pitchpulse_local_demo@postgres:5432/pitchpulse
+    PITCHPULSE_MONGO_URI: mongodb://mongo:27017
+    PITCHPULSE_AMQP_URL: amqp://pitchpulse:pitchpulse_local_demo@rabbitmq:5672/%2F
+    PREFECT_API_URL: http://prefect:4200/api
+    PREFECT_SERVER_ANALYTICS_ENABLED: 'false'
+    PREFECT_LOGGING_TO_API_ENABLED: 'true'
+  volumes:
+    - .:/app
+  depends_on:
+    postgres: {condition: service_healthy}
+    mongo: {condition: service_healthy}
+    rabbitmq: {condition: service_healthy}
+    prefect: {condition: service_healthy}
+services:
+  postgres:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    environment:
+      POSTGRES_USER: pitchpulse
+      POSTGRES_PASSWORD: pitchpulse_local_demo
+      POSTGRES_DB: pitchpulse
+    ports: ['127.0.0.1:55432:5432']
+    volumes: [postgres-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U pitchpulse -d pitchpulse']
+      interval: 5s
+      retries: 24
+  mongo:
+    image: mongo:7.0.24
+    ports: ['127.0.0.1:57017:27017']
+    volumes: [mongo-data:/data/db]
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', 'db.adminCommand({ping:1}).ok']
+      interval: 5s
+      retries: 24
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine@sha256:606d8c0d6b3c18d1da9afc53bc7cdb2a8d5486df91b5a9830e9e07626c9ae281
+    environment:
+      RABBITMQ_DEFAULT_USER: pitchpulse
+      RABBITMQ_DEFAULT_PASS: pitchpulse_local_demo
+    ports: ['127.0.0.1:5673:5672', '127.0.0.1:15673:15672']
+    volumes: [rabbit-data:/var/lib/rabbitmq]
+    healthcheck:
+      test: ['CMD', 'rabbitmq-diagnostics', '-q', 'ping']
+      interval: 5s
+      retries: 24
+  prefect:
+    image: pitchpulse360:complete
+    build: .
+    command: prefect server start --host 0.0.0.0
+    environment:
+      PREFECT_HOME: /prefect
+      PREFECT_SERVER_ANALYTICS_ENABLED: 'false'
+      PREFECT_UI_API_URL: http://127.0.0.1:4201/api
+      PREFECT_API_SERVICES_SCHEDULER_LOOP_SECONDS: '10'
+    ports: ['127.0.0.1:4201:4200']
+    volumes: [prefect-data:/prefect]
+    healthcheck:
+      test: ['CMD', 'python', '-c', 'import urllib.request; urllib.request.urlopen("http://localhost:4200/api/health")']
+      interval: 5s
+      retries: 36
+      start_period: 20s
+  pipeline:
+    <<: *app
+    profiles: [tools]
+    entrypoint: ['python', '-m', 'platform_lab.cli']
+    command: ['run']
+  scheduler:
+    <<: *app
+    command: python -m platform_lab.flow --serve
+    environment:
+      <<: *environment
+      PITCHPULSE_SCHEDULE_SECONDS: '${PITCHPULSE_SCHEDULE_SECONDS:-3600}'
+  consumer:
+    <<: *app
+    command: python -m platform_lab.streaming consume
+  api:
+    <<: *app
+    command: python -m uvicorn serving.api:app --host 0.0.0.0 --port 8000
+    ports: ['127.0.0.1:8002:8000']
+  dashboard:
+    <<: *app
+    command: python -m streamlit run dashboard/app.py --server.address 0.0.0.0 --server.port 8501 --browser.gatherUsageStats false
+    ports: ['127.0.0.1:8502:8501']
+volumes:
+  postgres-data:
+  mongo-data:
+  rabbit-data:
+  prefect-data:

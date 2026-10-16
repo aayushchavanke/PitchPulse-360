@@ -21,6 +21,9 @@ app = FastAPI(
     version="2.0.0"
 )
 
+from platform_lab.api import router as lab_router
+app.include_router(lab_router)
+
 API_KEY_NAME = "X-PitchPulse-API-Key"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
 

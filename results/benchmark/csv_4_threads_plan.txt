@@ -1,0 +1,68 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+EXPLAIN ANALYZE SELECT league_name,CAST(season_code AS VARCHAR) AS season_code,         COUNT(*) AS matches,SUM(CAST(total_goals AS BIGINT)) AS goals         FROM read_csv('/app/results/benchmark/replayed_matches.csv',header=true,all_varchar=true) GROUP BY 1,2 ORDER BY 1,2
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.183s              ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│           0 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│          ORDER_BY         │
+│    ────────────────────   │
+│      league_name ASC      │
+│      season_code ASC      │
+│                           │
+│          30 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│       HASH_GROUP_BY       │
+│    ────────────────────   │
+│          Groups:          │
+│             #0            │
+│             #1            │
+│                           │
+│        Aggregates:        │
+│        count_star()       │
+│          sum(#2)          │
+│                           │
+│          30 rows          │
+│          (0.02s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│        league_name        │
+│        season_code        │
+│CAST(total_goals AS BIGINT)│
+│                           │
+│        250,000 rows       │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         TABLE_SCAN        │
+│    ────────────────────   │
+│     Function: READ_CSV    │
+│                           │
+│        Projections:       │
+│        league_name        │
+│        season_code        │
+│        total_goals        │
+│                           │
+│    Total Files Read: 1    │
+│                           │
+│        250,000 rows       │
+│          (0.04s)          │
+└───────────────────────────┘

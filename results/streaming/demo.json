@@ -1,0 +1,15 @@
+{
+  "run": "85a75dc5-8dea-4cc6-958f-a4221e9aa2ce",
+  "published_valid": 20,
+  "published_duplicate": 1,
+  "published_invalid": 1,
+  "staged_unique": 20,
+  "rejection_records": 1,
+  "dead_queue_messages": 27,
+  "duplicate_retry": "ignored",
+  "bounded_consumer_counts": {
+    "inserted": 0,
+    "duplicate": 0,
+    "rejected": 0
+  }
+}

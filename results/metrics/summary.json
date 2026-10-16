@@ -1,0 +1,44 @@
+{
+  "source": "SYNTHETIC football ticket orders; not real club finances",
+  "ticket_orders": 6000,
+  "repeat_customer_pct": 46.4,
+  "comparisons": {
+    "daily_revenue": {
+      "answers_match": true,
+      "rows": 1687,
+      "median_ms": {
+        "view": 5.621,
+        "raw_sql": 5.475
+      },
+      "view_sql": "SELECT * FROM business.vw_daily_revenue ORDER BY order_date",
+      "raw_sql": "SELECT order_date,SUM(CASE WHEN status='Paid' THEN quantity*unit_price_eur ELSE 0 END) AS revenue_eur,\n COUNT(*) AS orders FROM business.ticket_orders GROUP BY order_date ORDER BY order_date",
+      "interpretation": "Views centralize the definition. Ordinary views are not precomputed and do not inherently speed up queries."
+    },
+    "monthly_sales_growth": {
+      "answers_match": true,
+      "rows": 71,
+      "median_ms": {
+        "view": 5.688,
+        "raw_sql": 5.491
+      },
+      "view_sql": "SELECT * FROM business.vw_monthly_sales_growth ORDER BY month",
+      "raw_sql": "WITH amounts AS (\n SELECT date_trunc('month',order_date)::DATE AS month,\n SUM(CASE WHEN status='Paid' THEN quantity*unit_price_eur ELSE 0 END) AS revenue_eur\n FROM business.ticket_orders GROUP BY 1), calendar AS (\n SELECT generate_series(date_trunc('month',MIN(order_date)),date_trunc('month',MAX(order_date)),INTERVAL '1 month')::DATE AS month\n FROM business.ticket_orders), monthly AS (\n SELECT calendar.month,COALESCE(amounts.revenue_eur,0) AS revenue_eur FROM calendar LEFT JOIN amounts USING(month)), previous AS (\n SELECT *,LAG(revenue_eur) OVER(ORDER BY month) AS previous_revenue_eur FROM monthly)\n SELECT *,100.0*(revenue_eur-previous_revenue_eur)/NULLIF(previous_revenue_eur,0) AS growth_pct\n FROM previous ORDER BY month",
+      "interpretation": "Views centralize the definition. Ordinary views are not precomputed and do not inherently speed up queries."
+    },
+    "repeat_customer_percentage": {
+      "answers_match": true,
+      "rows": 1,
+      "median_ms": {
+        "view": 3.917,
+        "raw_sql": 3.895
+      },
+      "view_sql": "SELECT * FROM business.vw_repeat_customer_percentage",
+      "raw_sql": "WITH customers AS (\n SELECT customer_id,COUNT(*) AS paid_orders FROM business.ticket_orders WHERE status='Paid' GROUP BY customer_id)\n SELECT COUNT(*) AS purchasing_customers,COUNT(*) FILTER(WHERE paid_orders>1) AS repeat_customers,\n 100.0*COUNT(*) FILTER(WHERE paid_orders>1)/NULLIF(COUNT(*),0) AS repeat_customer_pct FROM customers",
+      "interpretation": "Views centralize the definition. Ordinary views are not precomputed and do not inherently speed up queries."
+    }
+  },
+  "football_views": [
+    "daily_goals",
+    "team_win_percentage"
+  ]
+}

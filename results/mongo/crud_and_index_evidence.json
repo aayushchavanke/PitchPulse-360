@@ -1,0 +1,222 @@
+{
+  "create": "inserted",
+  "read_projection": {
+    "team": "Arsenal",
+    "rating": 7,
+    "notes": {
+      "strength": "passing"
+    }
+  },
+  "update": {
+    "team": "Arsenal",
+    "rating": 8,
+    "notes": {
+      "strength": "passing",
+      "reviewed": true
+    },
+    "tags": [
+      "demo",
+      "updated"
+    ]
+  },
+  "delete": "deleted and absence checked",
+  "filtered_examples": [
+    {
+      "away_goals": 3,
+      "away_team": "Man City",
+      "home_goals": 0,
+      "home_team": "Burnley"
+    },
+    {
+      "away_goals": 1,
+      "away_team": "Nott'm Forest",
+      "home_goals": 2,
+      "home_team": "Arsenal"
+    },
+    {
+      "away_goals": 1,
+      "away_team": "West Ham",
+      "home_goals": 1,
+      "home_team": "Bournemouth"
+    }
+  ],
+  "indexes": [
+    "_id_",
+    "league_season",
+    "home_date"
+  ],
+  "query_plan": {
+    "explainVersion": "1",
+    "queryPlanner": {
+      "namespace": "pitchpulse.raw_matches",
+      "indexFilterSet": false,
+      "parsedQuery": {
+        "$and": [
+          {
+            "league_name": {
+              "$eq": "Premier League"
+            }
+          },
+          {
+            "season_code": {
+              "$eq": "2324"
+            }
+          }
+        ]
+      },
+      "queryHash": "200F3FB6",
+      "planCacheKey": "14B63693",
+      "optimizationTimeMillis": 0,
+      "maxIndexedOrSolutionsReached": false,
+      "maxIndexedAndSolutionsReached": false,
+      "maxScansToExplodeReached": false,
+      "winningPlan": {
+        "stage": "PROJECTION_SIMPLE",
+        "transformBy": {
+          "_id": 0,
+          "home_team": 1,
+          "away_team": 1
+        },
+        "inputStage": {
+          "stage": "FETCH",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "keyPattern": {
+              "league_name": 1,
+              "season_code": 1
+            },
+            "indexName": "league_season",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "league_name": [],
+              "season_code": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "league_name": [
+                "[\"Premier League\", \"Premier League\"]"
+              ],
+              "season_code": [
+                "[\"2324\", \"2324\"]"
+              ]
+            }
+          }
+        }
+      },
+      "rejectedPlans": []
+    },
+    "executionStats": {
+      "executionSuccess": true,
+      "nReturned": 380,
+      "executionTimeMillis": 1,
+      "totalKeysExamined": 380,
+      "totalDocsExamined": 380,
+      "executionStages": {
+        "stage": "PROJECTION_SIMPLE",
+        "nReturned": 380,
+        "executionTimeMillisEstimate": 0,
+        "works": 381,
+        "advanced": 380,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "transformBy": {
+          "_id": 0,
+          "home_team": 1,
+          "away_team": 1
+        },
+        "inputStage": {
+          "stage": "FETCH",
+          "nReturned": 380,
+          "executionTimeMillisEstimate": 0,
+          "works": 381,
+          "advanced": 380,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "docsExamined": 380,
+          "alreadyHasObj": 0,
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nReturned": 380,
+            "executionTimeMillisEstimate": 0,
+            "works": 381,
+            "advanced": 380,
+            "needTime": 0,
+            "needYield": 0,
+            "saveState": 0,
+            "restoreState": 0,
+            "isEOF": 1,
+            "keyPattern": {
+              "league_name": 1,
+              "season_code": 1
+            },
+            "indexName": "league_season",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "league_name": [],
+              "season_code": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "league_name": [
+                "[\"Premier League\", \"Premier League\"]"
+              ],
+              "season_code": [
+                "[\"2324\", \"2324\"]"
+              ]
+            },
+            "keysExamined": 380,
+            "seeks": 1,
+            "dupsTested": 0,
+            "dupsDropped": 0
+          }
+        }
+      },
+      "allPlansExecution": []
+    },
+    "command": {
+      "find": "raw_matches",
+      "filter": {
+        "league_name": "Premier League",
+        "season_code": "2324"
+      },
+      "projection": {
+        "_id": 0,
+        "home_team": 1,
+        "away_team": 1
+      },
+      "$db": "pitchpulse"
+    },
+    "serverInfo": {
+      "host": "1a8d78835017",
+      "port": 27017,
+      "version": "7.0.24",
+      "gitVersion": "332b0e6c30fdc41a0228dc55657e2e0784b0fe24"
+    },
+    "serverParameters": {
+      "internalQueryFacetBufferSizeBytes": 104857600,
+      "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+      "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+      "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+      "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+      "internalQueryProhibitBlockingMergeOnMongoS": 0,
+      "internalQueryMaxAddToSetBytes": 104857600,
+      "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+      "internalQueryFrameworkControl": "forceClassicEngine"
+    },
+    "ok": 1.0
+  }
+}

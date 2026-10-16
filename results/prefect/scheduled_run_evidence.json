@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "deployment_id": "1cfde806-f4f7-4514-94bf-7eba96a033a8",
+  "schedules": [
+    {
+      "id": "0e8b979b-b64c-4bb6-b2de-3d7350c2e366",
+      "created": "2026-10-15T20:07:28.228746Z",
+      "updated": "2026-10-15T20:07:28.228758Z",
+      "deployment_id": "1cfde806-f4f7-4514-94bf-7eba96a033a8",
+      "schedule": {
+        "interval": 60.0,
+        "anchor_date": "2026-10-15T20:07:28.064978Z",
+        "timezone": "UTC"
+      },
+      "active": true,
+      "max_scheduled_runs": null,
+      "parameters": {},
+      "slug": null
+    }
+  ],
+  "run_id": "01a1412d-46ac-7abf-a026-fac0738f3b0a",
+  "auto_scheduled": true,
+  "state": "COMPLETED",
+  "start_time": "2026-10-15T20:08:27.823472Z",
+  "end_time": "2026-10-15T20:08:57.196149Z",
+  "observed_after": "2026-10-15 20:07:23.593559+00:00",
+  "completed_tasks": 11
+}

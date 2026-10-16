@@ -30,3 +30,14 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
+
+# Generated local state (rebuild with the project commands)
+.matplotlib/
+.pipeline.lock
+*.duckdb
+*.duckdb.wal
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example

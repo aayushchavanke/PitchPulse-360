@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "expectations": 45,
+  "clean_passed": 45,
+  "deliberate_failure_detected": 9,
+  "interpretation": "Clean data passed the gate. Separate intentionally damaged rows failed; they were never loaded into the warehouse."
+}

@@ -33,6 +33,7 @@ class LakehouseManager:
             self.bronze_path,
             df_bronze,
             mode="overwrite",
+            schema_mode="overwrite",
             partition_by=["league_name"]
         )
         print(f"[Lakehouse] Bronze Delta Table populated with {len(df_bronze):,} match records.")
@@ -54,6 +55,7 @@ class LakehouseManager:
             self.silver_path,
             df_silver,
             mode="overwrite",
+            schema_mode="overwrite",
             partition_by=["league_name"]
         )
         print(f"[Lakehouse] Silver Delta Table synchronized ({len(df_silver):,} clean matches).")
@@ -124,6 +126,7 @@ class LakehouseManager:
             self.gold_standings_path,
             all_standings,
             mode="overwrite",
+            schema_mode="overwrite",
             partition_by=["league_name"]
         )
         print(f"[Lakehouse] Gold Standings Table built across {len(standings_list)} league-seasons!")

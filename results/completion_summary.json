@@ -1,0 +1,39 @@
+{
+  "status": "implemented_and_verified",
+  "experiments": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "tests_passed": 30,
+  "postgres_matches": 10781,
+  "goals": 30186,
+  "mongo_documents": 10781,
+  "completed_prefect_tasks": 11,
+  "automatic_run": "01a1412d-46ac-7abf-a026-fac0738f3b0a",
+  "hourly_schedule_seconds": 3600,
+  "expectations_passed": 45,
+  "intentional_failed_expectations": 9,
+  "synthetic_ticket_orders": 6000,
+  "benchmark_rows": 250000,
+  "benchmark_modes": 6,
+  "delta_schema_rejections": 2,
+  "choices": {
+    "experiment_4": "Exact syllabus metrics on explicitly synthetic football ticket orders, plus historical football metric views",
+    "experiment_11": "Identical prepared fixture replays for scaling; not additional real matches",
+    "experiment_12": "Prefect rather than Airflow, as allowed by the syllabus",
+    "experiment_13": "Versioned custom Pandas expectation suite; not the Great Expectations library"
+  }
+}

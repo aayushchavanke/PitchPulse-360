@@ -1,0 +1,12 @@
+{
+  "name": "football_clean_match_expectations_v1",
+  "required_columns": ["match_id","match_date","home_team","away_team","home_goals","away_goals","result","league_name","season","season_code","source_file","source_row","home_shots","away_shots","home_shots_target","away_shots_target"],
+  "minimum_rows": 1,
+  "not_null": ["match_id","match_date","home_team","away_team","home_goals","away_goals","result","league_name","season","season_code","source_file","source_row"],
+  "unique": ["match_id"],
+  "types": {"match_date":"datetime","match_id":"string","home_team":"string","away_team":"string","league_name":"string","season":"string","season_code":"string","home_goals":"integer","away_goals":"integer","home_shots":"integer","away_shots":"integer","home_shots_target":"integer","away_shots_target":"integer","source_row":"integer"},
+  "ranges": {"home_goals":[0,20],"away_goals":[0,20],"home_shots":[0,80],"away_shots":[0,80],"home_shots_target":[0,80],"away_shots_target":[0,80],"home_yellows":[0,30],"away_yellows":[0,30],"home_reds":[0,30],"away_reds":[0,30]},
+  "allowed": {"result":["H","D","A"],"league_name":["Premier League","La Liga","Serie A","Bundesliga","Ligue 1"]},
+  "business_rules": ["result_matches_score","different_teams","home_target_not_above_total","away_target_not_above_total"],
+  "notes": "Custom declarative expectation suite implemented in Pandas; not the Great Expectations library. Optional measurements may be null; essential fields may not. Required-column constraints permit additional provenance/derived fields."
+}

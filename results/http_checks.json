@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "valid_post": 202,
+  "duplicate_post": 202,
+  "invalid_post": 422,
+  "unique_staged_rows": 1,
+  "recent_events_get": 200,
+  "standings_get": 200,
+  "event_id": "http:ba8b4ea9-12f4-42af-acc9-4884d43b3092",
+  "experiment_reports": {
+    "metrics": 200,
+    "delta": 200,
+    "benchmark": 200,
+    "quality": 200
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "dashboard/app.py": "All five football tabs loaded; league/season interactions and standings classification passed",
+  "navigation": "Single football dashboard; removed evidence page is absent"
+}

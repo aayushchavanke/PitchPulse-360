@@ -1,0 +1,381 @@
+{
+  "status": "completed",
+  "prefect_run_id": "01a142cf-3753-77fa-8159-97aa984c3d42",
+  "postgres": {
+    "matches": 10781,
+    "goals": 30186,
+    "teams": 140,
+    "team_seasons": 586,
+    "partitions": 6
+  },
+  "mongo": {
+    "raw_documents": 10781,
+    "crud_passed": true,
+    "indexes": [
+      "_id_",
+      "league_season",
+      "home_date"
+    ],
+    "filtered_examples": 3
+  },
+  "olap": {
+    "rollup": {
+      "rows": 36,
+      "grand_total_matches": 10781,
+      "grand_total_goals": 30186,
+      "engines_match": true,
+      "timing": {
+        "DuckDB": {
+          "median_ms": 5.711,
+          "runs": 5
+        },
+        "PostgreSQL": {
+          "median_ms": 5.449,
+          "runs": 5
+        }
+      },
+      "postgres_execution_ms": 8.332
+    },
+    "cube": {
+      "rows": 42,
+      "grand_total_matches": 10781,
+      "grand_total_goals": 30186,
+      "engines_match": true,
+      "timing": {
+        "DuckDB": {
+          "median_ms": 5.852,
+          "runs": 5
+        },
+        "PostgreSQL": {
+          "median_ms": 8.433,
+          "runs": 5
+        }
+      },
+      "postgres_execution_ms": 7.052
+    },
+    "grouping_sets": {
+      "rows": 42,
+      "grand_total_matches": 10781,
+      "grand_total_goals": 30186,
+      "engines_match": true,
+      "timing": {
+        "DuckDB": {
+          "median_ms": 7.89,
+          "runs": 5
+        },
+        "PostgreSQL": {
+          "median_ms": 7.76,
+          "runs": 5
+        }
+      },
+      "postgres_execution_ms": 9.964
+    }
+  },
+  "lakehouse": {
+    "matches": 10781,
+    "team_seasons": 586,
+    "player_profiles": 34,
+    "simulated_player_actions": 5741
+  },
+  "streaming": {
+    "run": "85a75dc5-8dea-4cc6-958f-a4221e9aa2ce",
+    "published_valid": 20,
+    "published_duplicate": 1,
+    "published_invalid": 1,
+    "staged_unique": 20,
+    "rejection_records": 1,
+    "dead_queue_messages": 27,
+    "duplicate_retry": "ignored",
+    "bounded_consumer_counts": {
+      "inserted": 0,
+      "duplicate": 0,
+      "rejected": 0
+    }
+  },
+  "quality": {
+    "status": "passed",
+    "expectations": 45,
+    "clean_passed": 45,
+    "deliberate_failure_detected": 9,
+    "interpretation": "Clean data passed the gate. Separate intentionally damaged rows failed; they were never loaded into the warehouse."
+  },
+  "metrics": {
+    "source": "SYNTHETIC football ticket orders; not real club finances",
+    "ticket_orders": 6000,
+    "repeat_customer_pct": 46.4,
+    "comparisons": {
+      "daily_revenue": {
+        "answers_match": true,
+        "rows": 1687,
+        "median_ms": {
+          "view": 5.621,
+          "raw_sql": 5.475
+        },
+        "view_sql": "SELECT * FROM business.vw_daily_revenue ORDER BY order_date",
+        "raw_sql": "SELECT order_date,SUM(CASE WHEN status='Paid' THEN quantity*unit_price_eur ELSE 0 END) AS revenue_eur,\n COUNT(*) AS orders FROM business.ticket_orders GROUP BY order_date ORDER BY order_date",
+        "interpretation": "Views centralize the definition. Ordinary views are not precomputed and do not inherently speed up queries."
+      },
+      "monthly_sales_growth": {
+        "answers_match": true,
+        "rows": 71,
+        "median_ms": {
+          "view": 5.688,
+          "raw_sql": 5.491
+        },
+        "view_sql": "SELECT * FROM business.vw_monthly_sales_growth ORDER BY month",
+        "raw_sql": "WITH amounts AS (\n SELECT date_trunc('month',order_date)::DATE AS month,\n SUM(CASE WHEN status='Paid' THEN quantity*unit_price_eur ELSE 0 END) AS revenue_eur\n FROM business.ticket_orders GROUP BY 1), calendar AS (\n SELECT generate_series(date_trunc('month',MIN(order_date)),date_trunc('month',MAX(order_date)),INTERVAL '1 month')::DATE AS month\n FROM business.ticket_orders), monthly AS (\n SELECT calendar.month,COALESCE(amounts.revenue_eur,0) AS revenue_eur FROM calendar LEFT JOIN amounts USING(month)), previous AS (\n SELECT *,LAG(revenue_eur) OVER(ORDER BY month) AS previous_revenue_eur FROM monthly)\n SELECT *,100.0*(revenue_eur-previous_revenue_eur)/NULLIF(previous_revenue_eur,0) AS growth_pct\n FROM previous ORDER BY month",
+        "interpretation": "Views centralize the definition. Ordinary views are not precomputed and do not inherently speed up queries."
+      },
+      "repeat_customer_percentage": {
+        "answers_match": true,
+        "rows": 1,
+        "median_ms": {
+          "view": 3.917,
+          "raw_sql": 3.895
+        },
+        "view_sql": "SELECT * FROM business.vw_repeat_customer_percentage",
+        "raw_sql": "WITH customers AS (\n SELECT customer_id,COUNT(*) AS paid_orders FROM business.ticket_orders WHERE status='Paid' GROUP BY customer_id)\n SELECT COUNT(*) AS purchasing_customers,COUNT(*) FILTER(WHERE paid_orders>1) AS repeat_customers,\n 100.0*COUNT(*) FILTER(WHERE paid_orders>1)/NULLIF(COUNT(*),0) AS repeat_customer_pct FROM customers",
+        "interpretation": "Views centralize the definition. Ordinary views are not precomputed and do not inherently speed up queries."
+      }
+    },
+    "football_views": [
+      "daily_goals",
+      "team_win_percentage"
+    ]
+  },
+  "delta_features": {
+    "status": "passed",
+    "table": "/app/results/delta_lab/8fbb3ebb-3f4c-41ff-af9e-afd169d41913/table",
+    "snapshots": {
+      "created": {
+        "version": 0,
+        "rows": [
+          {
+            "match_id": "demo-1",
+            "goals": 2
+          },
+          {
+            "match_id": "demo-2",
+            "goals": 1
+          }
+        ]
+      },
+      "inserted": {
+        "version": 1,
+        "rows": [
+          {
+            "match_id": "demo-1",
+            "goals": 2
+          },
+          {
+            "match_id": "demo-2",
+            "goals": 1
+          },
+          {
+            "match_id": "demo-3",
+            "goals": 0
+          }
+        ]
+      },
+      "updated": {
+        "version": 2,
+        "rows": [
+          {
+            "match_id": "demo-1",
+            "goals": 3
+          },
+          {
+            "match_id": "demo-2",
+            "goals": 1
+          },
+          {
+            "match_id": "demo-3",
+            "goals": 0
+          }
+        ]
+      },
+      "deleted": {
+        "version": 3,
+        "rows": [
+          {
+            "match_id": "demo-1",
+            "goals": 3
+          },
+          {
+            "match_id": "demo-3",
+            "goals": 0
+          }
+        ]
+      }
+    },
+    "old_version_read": 0,
+    "old_rows": [
+      {
+        "match_id": "demo-1",
+        "goals": 2
+      },
+      {
+        "match_id": "demo-2",
+        "goals": 1
+      }
+    ],
+    "rejected_writes": [
+      {
+        "case": "wrong_columns",
+        "error_type": "SchemaMismatchError",
+        "message": "Field unexpected not found in schema"
+      },
+      {
+        "case": "wrong_type",
+        "error_type": "Exception",
+        "message": "Cast error: Cannot cast string 'not-a-number' to value of Int64 type"
+      }
+    ],
+    "version_unchanged_after_rejections": true,
+    "history": [
+      {
+        "timestamp": 1792130177366,
+        "operation": "DELETE",
+        "operationParameters": {
+          "predicate": "match_id = 'demo-2'"
+        },
+        "readVersion": 2,
+        "clientVersion": "delta-rs.py-0.25.5",
+        "operationMetrics": {
+          "execution_time_ms": 216,
+          "num_added_files": 1,
+          "num_copied_rows": 1,
+          "num_deleted_rows": 1,
+          "num_removed_files": 1,
+          "rewrite_time_ms": 121,
+          "scan_time_ms": 95
+        },
+        "version": 3
+      },
+      {
+        "timestamp": 1792130176623,
+        "operation": "UPDATE",
+        "operationParameters": {
+          "predicate": "match_id = 'demo-1'"
+        },
+        "readVersion": 1,
+        "clientVersion": "delta-rs.py-0.25.5",
+        "operationMetrics": {
+          "execution_time_ms": 154,
+          "num_added_files": 1,
+          "num_copied_rows": 1,
+          "num_removed_files": 1,
+          "num_updated_rows": 1,
+          "scan_time_ms": 59
+        },
+        "version": 2
+      },
+      {
+        "timestamp": 1792130176172,
+        "operation": "WRITE",
+        "operationParameters": {
+          "mode": "Append"
+        },
+        "operationMetrics": {
+          "execution_time_ms": 23,
+          "num_added_files": 1,
+          "num_added_rows": 1,
+          "num_partitions": 0,
+          "num_removed_files": 0
+        },
+        "clientVersion": "delta-rs.py-0.25.5",
+        "version": 1
+      },
+      {
+        "timestamp": 1792130175905,
+        "operation": "WRITE",
+        "operationParameters": {
+          "mode": "ErrorIfExists"
+        },
+        "operationMetrics": {
+          "execution_time_ms": 26,
+          "num_added_files": 1,
+          "num_added_rows": 2,
+          "num_partitions": 0,
+          "num_removed_files": 0
+        },
+        "clientVersion": "delta-rs.py-0.25.5",
+        "version": 0
+      }
+    ],
+    "interpretation": "Insert adds demo-3; update changes demo-1 from 2 to 3 goals; delete removes demo-2. Version 0 still contains original rows. Schema errors created no commit."
+  },
+  "benchmark": {
+    "status": "passed",
+    "source": "Clean historical fixtures repeated for scaling, not additional real matches",
+    "original_matches": 10781,
+    "benchmark_rows": 250000,
+    "warmups": 1,
+    "runs_per_mode": 5,
+    "modes": [
+      {
+        "storage": "CSV",
+        "threads": 1,
+        "median_ms": 184.714,
+        "min_ms": 145.755,
+        "max_ms": 200.047,
+        "runs": 5,
+        "answers_match": true
+      },
+      {
+        "storage": "Parquet",
+        "threads": 1,
+        "median_ms": 172.317,
+        "min_ms": 166.079,
+        "max_ms": 178.849,
+        "runs": 5,
+        "answers_match": true
+      },
+      {
+        "storage": "DuckDB",
+        "threads": 1,
+        "median_ms": 8.186,
+        "min_ms": 6.985,
+        "max_ms": 9.349,
+        "runs": 5,
+        "answers_match": true
+      },
+      {
+        "storage": "CSV",
+        "threads": 4,
+        "median_ms": 162.226,
+        "min_ms": 152.814,
+        "max_ms": 182.006,
+        "runs": 5,
+        "answers_match": true
+      },
+      {
+        "storage": "Parquet",
+        "threads": 4,
+        "median_ms": 124.559,
+        "min_ms": 112.203,
+        "max_ms": 139.196,
+        "runs": 5,
+        "answers_match": true
+      },
+      {
+        "storage": "DuckDB",
+        "threads": 4,
+        "median_ms": 9.236,
+        "min_ms": 8.187,
+        "max_ms": 10.182,
+        "runs": 5,
+        "answers_match": true
+      }
+    ],
+    "sizes": {
+      "csv_bytes": 8150325,
+      "parquet_bytes": 70281,
+      "duckdb_bytes": 2895872
+    },
+    "all_answers_match": true,
+    "filtered_parquet_matches_native": true,
+    "interpretation": "One machine; 1/4 are DuckDB thread limits, not computers or a guarantee every query uses four workers. CSV, Parquet and native tables contain identical prepared rows. Warm-cache medians are local observations; four threads may be slower. Native database size includes database metadata."
+  },
+  "duration_seconds": 30.888
+}

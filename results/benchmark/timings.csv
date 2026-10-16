@@ -1,0 +1,7 @@
+storage,threads,median_ms,min_ms,max_ms,runs,answers_match
+CSV,1,184.714,145.755,200.047,5,True
+Parquet,1,172.317,166.079,178.849,5,True
+DuckDB,1,8.186,6.985,9.349,5,True
+CSV,4,162.226,152.814,182.006,5,True
+Parquet,4,124.559,112.203,139.196,5,True
+DuckDB,4,9.236,8.187,10.182,5,True

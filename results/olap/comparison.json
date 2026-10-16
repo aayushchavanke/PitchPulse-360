@@ -1,0 +1,53 @@
+{
+  "rollup": {
+    "rows": 36,
+    "grand_total_matches": 10781,
+    "grand_total_goals": 30186,
+    "engines_match": true,
+    "timing": {
+      "DuckDB": {
+        "median_ms": 5.711,
+        "runs": 5
+      },
+      "PostgreSQL": {
+        "median_ms": 5.449,
+        "runs": 5
+      }
+    },
+    "postgres_execution_ms": 8.332
+  },
+  "cube": {
+    "rows": 42,
+    "grand_total_matches": 10781,
+    "grand_total_goals": 30186,
+    "engines_match": true,
+    "timing": {
+      "DuckDB": {
+        "median_ms": 5.852,
+        "runs": 5
+      },
+      "PostgreSQL": {
+        "median_ms": 8.433,
+        "runs": 5
+      }
+    },
+    "postgres_execution_ms": 7.052
+  },
+  "grouping_sets": {
+    "rows": 42,
+    "grand_total_matches": 10781,
+    "grand_total_goals": 30186,
+    "engines_match": true,
+    "timing": {
+      "DuckDB": {
+        "median_ms": 7.89,
+        "runs": 5
+      },
+      "PostgreSQL": {
+        "median_ms": 7.76,
+        "runs": 5
+      }
+    },
+    "postgres_execution_ms": 9.964
+  }
+}

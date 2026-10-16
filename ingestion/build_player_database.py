@@ -7,6 +7,7 @@ Generates high-precision, authentic player statistics and spatial telemetry for 
 """
 
 import os
+import hashlib
 import numpy as np
 import pandas as pd
 
@@ -64,7 +65,7 @@ def generate_spatial_telemetry_for_player(p: dict, num_samples: int = 180) -> li
     Pitch length is [0, 120] (attacking towards X=120, opponent goal at X=120, Y=40).
     Pitch width is [0, 80].
     """
-    np.random.seed(abs(hash(p["name"])) % (2**31))
+    np.random.seed(int(hashlib.sha256(p["name"].encode('utf-8')).hexdigest()[:8],16) % (2**31))
     zone = p["zone"]
     events = []
 

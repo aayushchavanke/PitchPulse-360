@@ -1,0 +1,21 @@
+* text=auto
+*.py text eol=lf
+*.sql text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.ps1 text eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+*.json text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.pdf binary
+*.parquet binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pptx binary
+*.docx binary
+*.duckdb binary

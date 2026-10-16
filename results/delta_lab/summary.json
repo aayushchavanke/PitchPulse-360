@@ -1,0 +1,162 @@
+{
+  "status": "passed",
+  "table": "/app/results/delta_lab/8fbb3ebb-3f4c-41ff-af9e-afd169d41913/table",
+  "snapshots": {
+    "created": {
+      "version": 0,
+      "rows": [
+        {
+          "match_id": "demo-1",
+          "goals": 2
+        },
+        {
+          "match_id": "demo-2",
+          "goals": 1
+        }
+      ]
+    },
+    "inserted": {
+      "version": 1,
+      "rows": [
+        {
+          "match_id": "demo-1",
+          "goals": 2
+        },
+        {
+          "match_id": "demo-2",
+          "goals": 1
+        },
+        {
+          "match_id": "demo-3",
+          "goals": 0
+        }
+      ]
+    },
+    "updated": {
+      "version": 2,
+      "rows": [
+        {
+          "match_id": "demo-1",
+          "goals": 3
+        },
+        {
+          "match_id": "demo-2",
+          "goals": 1
+        },
+        {
+          "match_id": "demo-3",
+          "goals": 0
+        }
+      ]
+    },
+    "deleted": {
+      "version": 3,
+      "rows": [
+        {
+          "match_id": "demo-1",
+          "goals": 3
+        },
+        {
+          "match_id": "demo-3",
+          "goals": 0
+        }
+      ]
+    }
+  },
+  "old_version_read": 0,
+  "old_rows": [
+    {
+      "match_id": "demo-1",
+      "goals": 2
+    },
+    {
+      "match_id": "demo-2",
+      "goals": 1
+    }
+  ],
+  "rejected_writes": [
+    {
+      "case": "wrong_columns",
+      "error_type": "SchemaMismatchError",
+      "message": "Field unexpected not found in schema"
+    },
+    {
+      "case": "wrong_type",
+      "error_type": "Exception",
+      "message": "Cast error: Cannot cast string 'not-a-number' to value of Int64 type"
+    }
+  ],
+  "version_unchanged_after_rejections": true,
+  "history": [
+    {
+      "timestamp": 1792130177366,
+      "operation": "DELETE",
+      "operationParameters": {
+        "predicate": "match_id = 'demo-2'"
+      },
+      "readVersion": 2,
+      "clientVersion": "delta-rs.py-0.25.5",
+      "operationMetrics": {
+        "execution_time_ms": 216,
+        "num_added_files": 1,
+        "num_copied_rows": 1,
+        "num_deleted_rows": 1,
+        "num_removed_files": 1,
+        "rewrite_time_ms": 121,
+        "scan_time_ms": 95
+      },
+      "version": 3
+    },
+    {
+      "timestamp": 1792130176623,
+      "operation": "UPDATE",
+      "operationParameters": {
+        "predicate": "match_id = 'demo-1'"
+      },
+      "readVersion": 1,
+      "clientVersion": "delta-rs.py-0.25.5",
+      "operationMetrics": {
+        "execution_time_ms": 154,
+        "num_added_files": 1,
+        "num_copied_rows": 1,
+        "num_removed_files": 1,
+        "num_updated_rows": 1,
+        "scan_time_ms": 59
+      },
+      "version": 2
+    },
+    {
+      "timestamp": 1792130176172,
+      "operation": "WRITE",
+      "operationParameters": {
+        "mode": "Append"
+      },
+      "operationMetrics": {
+        "execution_time_ms": 23,
+        "num_added_files": 1,
+        "num_added_rows": 1,
+        "num_partitions": 0,
+        "num_removed_files": 0
+      },
+      "clientVersion": "delta-rs.py-0.25.5",
+      "version": 1
+    },
+    {
+      "timestamp": 1792130175905,
+      "operation": "WRITE",
+      "operationParameters": {
+        "mode": "ErrorIfExists"
+      },
+      "operationMetrics": {
+        "execution_time_ms": 26,
+        "num_added_files": 1,
+        "num_added_rows": 2,
+        "num_partitions": 0,
+        "num_removed_files": 0
+      },
+      "clientVersion": "delta-rs.py-0.25.5",
+      "version": 0
+    }
+  ],
+  "interpretation": "Insert adds demo-3; update changes demo-1 from 2 to 3 goals; delete removes demo-2. Version 0 still contains original rows. Schema errors created no commit."
+}

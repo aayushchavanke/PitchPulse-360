@@ -1,0 +1,68 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+EXPLAIN ANALYZE SELECT league_name,season_code,COUNT(*) AS matches,SUM(total_goals) AS goals,       GROUPING(league_name) AS all_leagues,GROUPING(season_code) AS all_seasons       FROM matches GROUP BY ROLLUP(league_name,season_code)       ORDER BY all_leagues,all_seasons,league_name,season_code
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.0061s             ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│           0 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│          ORDER_BY         │
+│    ────────────────────   │
+│   GROUPING(football.main  │
+│ .matches.league_name) ASC │
+│   GROUPING(football.main  │
+│ .matches.season_code) ASC │
+│   football.main.matches   │
+│      .league_name ASC     │
+│   football.main.matches   │
+│      .season_code ASC     │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│       HASH_GROUP_BY       │
+│    ────────────────────   │
+│          Groups:          │
+│             #0            │
+│             #1            │
+│                           │
+│        Aggregates:        │
+│        count_star()       │
+│    sum_no_overflow(#2)    │
+│                           │
+│          36 rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│        league_name        │
+│        season_code        │
+│        total_goals        │
+│                           │
+│        10,781 rows        │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         TABLE_SCAN        │
+│    ────────────────────   │
+│       Table: matches      │
+│   Type: Sequential Scan   │
+│                           │
+│        10,781 rows        │
+│          (0.00s)          │
+└───────────────────────────┘

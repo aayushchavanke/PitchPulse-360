@@ -1,0 +1,1034 @@
+<html><head><meta charset="utf-8"><title>Football EDA</title></head><body>
+    <h1>Football exploration and cleaning</h1><p>10,781 input rows; 10,781 accepted; 0 rejected.</p>
+    <p>Optional missing measurements stay unknown. Invalid optional measurements are logged and cleared; valid match scores remain. Valid high-scoring matches remain in the data.</p>
+    <img width="900" src="overview.png"><img width="900" src="missing_values.png">
+    <h2>Before</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>match_date</th>
+      <th>home_team</th>
+      <th>away_team</th>
+      <th>home_goals</th>
+      <th>away_goals</th>
+      <th>result</th>
+      <th>home_shots</th>
+      <th>away_shots</th>
+      <th>home_shots_target</th>
+      <th>away_shots_target</th>
+      <th>home_yellows</th>
+      <th>away_yellows</th>
+      <th>home_reds</th>
+      <th>away_reds</th>
+      <th>league_name</th>
+      <th>country</th>
+      <th>season</th>
+      <th>season_code</th>
+      <th>source_file</th>
+      <th>source_row</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781.000000</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>1117</td>
+      <td>140</td>
+      <td>140</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>5</td>
+      <td>5</td>
+      <td>6</td>
+      <td>6</td>
+      <td>30</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>22/12/2018</td>
+      <td>Arsenal</td>
+      <td>Man City</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>H</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Premier League</td>
+      <td>England</td>
+      <td>2022/2023</td>
+      <td>2223</td>
+      <td>E0_2324.csv</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>37</td>
+      <td>114</td>
+      <td>114</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4677</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2280</td>
+      <td>2280</td>
+      <td>1826</td>
+      <td>1826</td>
+      <td>380</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.543271</td>
+      <td>1.256655</td>
+      <td>NaN</td>
+      <td>13.408125</td>
+      <td>11.074576</td>
+      <td>4.887951</td>
+      <td>4.053427</td>
+      <td>1.954271</td>
+      <td>2.176329</td>
+      <td>0.089509</td>
+      <td>0.104721</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>182.841851</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.303309</td>
+      <td>1.172617</td>
+      <td>NaN</td>
+      <td>5.228545</td>
+      <td>4.714581</td>
+      <td>2.636349</td>
+      <td>2.378421</td>
+      <td>1.375456</td>
+      <td>1.406643</td>
+      <td>0.304363</td>
+      <td>0.325019</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>106.363980</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>10.000000</td>
+      <td>8.000000</td>
+      <td>3.000000</td>
+      <td>2.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>91.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>NaN</td>
+      <td>13.000000</td>
+      <td>11.000000</td>
+      <td>5.000000</td>
+      <td>4.000000</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>181.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+      <td>17.000000</td>
+      <td>14.000000</td>
+      <td>6.000000</td>
+      <td>5.000000</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>271.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>9.000000</td>
+      <td>9.000000</td>
+      <td>NaN</td>
+      <td>46.000000</td>
+      <td>35.000000</td>
+      <td>20.000000</td>
+      <td>20.000000</td>
+      <td>9.000000</td>
+      <td>8.000000</td>
+      <td>3.000000</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>381.000000</td>
+    </tr>
+  </tbody>
+</table>
+    <h2>After</h2><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>match_date</th>
+      <th>home_team</th>
+      <th>away_team</th>
+      <th>home_goals</th>
+      <th>away_goals</th>
+      <th>result</th>
+      <th>home_shots</th>
+      <th>away_shots</th>
+      <th>home_shots_target</th>
+      <th>away_shots_target</th>
+      <th>home_yellows</th>
+      <th>away_yellows</th>
+      <th>home_reds</th>
+      <th>away_reds</th>
+      <th>league_name</th>
+      <th>country</th>
+      <th>season</th>
+      <th>season_code</th>
+      <th>source_file</th>
+      <th>source_row</th>
+      <th>measurement_repair_notes</th>
+      <th>match_id</th>
+      <th>total_goals</th>
+      <th>home_points</th>
+      <th>away_points</th>
+      <th>goal_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781.0</td>
+      <td>10781.0</td>
+      <td>10781</td>
+      <td>10781.0</td>
+      <td>10780.0</td>
+      <td>10781.0</td>
+      <td>10780.0</td>
+      <td>10781.0</td>
+      <td>10781.0</td>
+      <td>10781.0</td>
+      <td>10781.0</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781.000000</td>
+      <td>10781</td>
+      <td>10781</td>
+      <td>10781.0</td>
+      <td>10781.000000</td>
+      <td>10781.000000</td>
+      <td>10781.0</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>NaN</td>
+      <td>140</td>
+      <td>140</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>3</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>5</td>
+      <td>5</td>
+      <td>6</td>
+      <td>6</td>
+      <td>30</td>
+      <td>NaN</td>
+      <td>2</td>
+      <td>10781</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>NaN</td>
+      <td>Arsenal</td>
+      <td>Man City</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>H</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>Premier League</td>
+      <td>England</td>
+      <td>2022/2023</td>
+      <td>2223</td>
+      <td>E0_2324.csv</td>
+      <td>NaN</td>
+      <td></td>
+      <td>92effb93901efdf6bfe31d5a</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>NaN</td>
+      <td>114</td>
+      <td>114</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>4677</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>&lt;NA&gt;</td>
+      <td>2280</td>
+      <td>2280</td>
+      <td>1826</td>
+      <td>1826</td>
+      <td>380</td>
+      <td>NaN</td>
+      <td>10780</td>
+      <td>1</td>
+      <td>&lt;NA&gt;</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>&lt;NA&gt;</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>2021-07-10 20:13:20.074204672</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.543271</td>
+      <td>1.256655</td>
+      <td>NaN</td>
+      <td>13.408125</td>
+      <td>11.074861</td>
+      <td>4.887951</td>
+      <td>4.052968</td>
+      <td>1.954271</td>
+      <td>2.176329</td>
+      <td>0.089509</td>
+      <td>0.104721</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>182.841851</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.799926</td>
+      <td>1.555143</td>
+      <td>1.191170</td>
+      <td>0.286615</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2018-08-10 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>-9.0</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>2019-12-26 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>10.0</td>
+      <td>8.0</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>91.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>2021-08-13 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>13.0</td>
+      <td>11.0</td>
+      <td>5.0</td>
+      <td>4.0</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>181.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3.0</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2023-01-21 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>17.0</td>
+      <td>14.0</td>
+      <td>6.0</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>3.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>271.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>4.0</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2024-06-02 00:00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>9.0</td>
+      <td>9.0</td>
+      <td>NaN</td>
+      <td>46.0</td>
+      <td>35.0</td>
+      <td>20.0</td>
+      <td>20.0</td>
+      <td>9.0</td>
+      <td>8.0</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>381.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>10.0</td>
+      <td>3.000000</td>
+      <td>3.000000</td>
+      <td>9.0</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.303309</td>
+      <td>1.172617</td>
+      <td>NaN</td>
+      <td>5.228545</td>
+      <td>4.714707</td>
+      <td>2.636349</td>
+      <td>2.378054</td>
+      <td>1.375456</td>
+      <td>1.406643</td>
+      <td>0.304363</td>
+      <td>0.325019</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>106.363980</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.672473</td>
+      <td>1.318995</td>
+      <td>1.283512</td>
+      <td>1.830335</td>
+    </tr>
+  </tbody>
+</table>
+    <h2>Rules and counts</h2><pre>{
+  &quot;before&quot;: {
+    &quot;rows&quot;: 10781,
+    &quot;columns&quot;: 20,
+    &quot;types&quot;: {
+      &quot;match_date&quot;: &quot;object&quot;,
+      &quot;home_team&quot;: &quot;object&quot;,
+      &quot;away_team&quot;: &quot;object&quot;,
+      &quot;home_goals&quot;: &quot;int64&quot;,
+      &quot;away_goals&quot;: &quot;int64&quot;,
+      &quot;result&quot;: &quot;object&quot;,
+      &quot;home_shots&quot;: &quot;int64&quot;,
+      &quot;away_shots&quot;: &quot;int64&quot;,
+      &quot;home_shots_target&quot;: &quot;int64&quot;,
+      &quot;away_shots_target&quot;: &quot;int64&quot;,
+      &quot;home_yellows&quot;: &quot;int64&quot;,
+      &quot;away_yellows&quot;: &quot;int64&quot;,
+      &quot;home_reds&quot;: &quot;int64&quot;,
+      &quot;away_reds&quot;: &quot;int64&quot;,
+      &quot;league_name&quot;: &quot;object&quot;,
+      &quot;country&quot;: &quot;object&quot;,
+      &quot;season&quot;: &quot;object&quot;,
+      &quot;season_code&quot;: &quot;object&quot;,
+      &quot;source_file&quot;: &quot;object&quot;,
+      &quot;source_row&quot;: &quot;int64&quot;
+    },
+    &quot;nulls&quot;: {
+      &quot;match_date&quot;: 0,
+      &quot;home_team&quot;: 0,
+      &quot;away_team&quot;: 0,
+      &quot;home_goals&quot;: 0,
+      &quot;away_goals&quot;: 0,
+      &quot;result&quot;: 0,
+      &quot;home_shots&quot;: 0,
+      &quot;away_shots&quot;: 0,
+      &quot;home_shots_target&quot;: 0,
+      &quot;away_shots_target&quot;: 0,
+      &quot;home_yellows&quot;: 0,
+      &quot;away_yellows&quot;: 0,
+      &quot;home_reds&quot;: 0,
+      &quot;away_reds&quot;: 0,
+      &quot;league_name&quot;: 0,
+      &quot;country&quot;: 0,
+      &quot;season&quot;: 0,
+      &quot;season_code&quot;: 0,
+      &quot;source_file&quot;: 0,
+      &quot;source_row&quot;: 0
+    },
+    &quot;exact_duplicate_rows&quot;: 0,
+    &quot;numeric_summary&quot;: {
+      &quot;home_goals&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.5432705686,
+        &quot;std&quot;: 1.3033090567,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 1.0,
+        &quot;50%&quot;: 1.0,
+        &quot;75%&quot;: 2.0,
+        &quot;max&quot;: 9.0
+      },
+      &quot;away_goals&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.2566552268,
+        &quot;std&quot;: 1.1726171903,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 1.0,
+        &quot;75%&quot;: 2.0,
+        &quot;max&quot;: 9.0
+      },
+      &quot;home_shots&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 13.4081254058,
+        &quot;std&quot;: 5.2285452435,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 10.0,
+        &quot;50%&quot;: 13.0,
+        &quot;75%&quot;: 17.0,
+        &quot;max&quot;: 46.0
+      },
+      &quot;away_shots&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 11.0745756423,
+        &quot;std&quot;: 4.7145812696,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 8.0,
+        &quot;50%&quot;: 11.0,
+        &quot;75%&quot;: 14.0,
+        &quot;max&quot;: 35.0
+      },
+      &quot;home_shots_target&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 4.887951025,
+        &quot;std&quot;: 2.6363493909,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 3.0,
+        &quot;50%&quot;: 5.0,
+        &quot;75%&quot;: 6.0,
+        &quot;max&quot;: 20.0
+      },
+      &quot;away_shots_target&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 4.0534273259,
+        &quot;std&quot;: 2.3784208029,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 2.0,
+        &quot;50%&quot;: 4.0,
+        &quot;75%&quot;: 5.0,
+        &quot;max&quot;: 20.0
+      },
+      &quot;home_yellows&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.9542714034,
+        &quot;std&quot;: 1.3754559305,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 1.0,
+        &quot;50%&quot;: 2.0,
+        &quot;75%&quot;: 3.0,
+        &quot;max&quot;: 9.0
+      },
+      &quot;away_yellows&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 2.1763287265,
+        &quot;std&quot;: 1.4066433648,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 1.0,
+        &quot;50%&quot;: 2.0,
+        &quot;75%&quot;: 3.0,
+        &quot;max&quot;: 8.0
+      },
+      &quot;home_reds&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 0.089509322,
+        &quot;std&quot;: 0.3043627584,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 0.0,
+        &quot;75%&quot;: 0.0,
+        &quot;max&quot;: 3.0
+      },
+      &quot;away_reds&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 0.1047212689,
+        &quot;std&quot;: 0.3250188645,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 0.0,
+        &quot;75%&quot;: 0.0,
+        &quot;max&quot;: 2.0
+      },
+      &quot;source_row&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 182.8418514052,
+        &quot;std&quot;: 106.363979945,
+        &quot;min&quot;: 2.0,
+        &quot;25%&quot;: 91.0,
+        &quot;50%&quot;: 181.0,
+        &quot;75%&quot;: 271.0,
+        &quot;max&quot;: 381.0
+      }
+    }
+  },
+  &quot;after&quot;: {
+    &quot;rows&quot;: 10781,
+    &quot;columns&quot;: 26,
+    &quot;types&quot;: {
+      &quot;match_date&quot;: &quot;datetime64[ns]&quot;,
+      &quot;home_team&quot;: &quot;string&quot;,
+      &quot;away_team&quot;: &quot;string&quot;,
+      &quot;home_goals&quot;: &quot;Int64&quot;,
+      &quot;away_goals&quot;: &quot;Int64&quot;,
+      &quot;result&quot;: &quot;object&quot;,
+      &quot;home_shots&quot;: &quot;Int64&quot;,
+      &quot;away_shots&quot;: &quot;Int64&quot;,
+      &quot;home_shots_target&quot;: &quot;Int64&quot;,
+      &quot;away_shots_target&quot;: &quot;Int64&quot;,
+      &quot;home_yellows&quot;: &quot;Int64&quot;,
+      &quot;away_yellows&quot;: &quot;Int64&quot;,
+      &quot;home_reds&quot;: &quot;Int64&quot;,
+      &quot;away_reds&quot;: &quot;Int64&quot;,
+      &quot;league_name&quot;: &quot;string&quot;,
+      &quot;country&quot;: &quot;string&quot;,
+      &quot;season&quot;: &quot;string&quot;,
+      &quot;season_code&quot;: &quot;string&quot;,
+      &quot;source_file&quot;: &quot;object&quot;,
+      &quot;source_row&quot;: &quot;int64&quot;,
+      &quot;measurement_repair_notes&quot;: &quot;object&quot;,
+      &quot;match_id&quot;: &quot;object&quot;,
+      &quot;total_goals&quot;: &quot;Int64&quot;,
+      &quot;home_points&quot;: &quot;int64&quot;,
+      &quot;away_points&quot;: &quot;int64&quot;,
+      &quot;goal_diff&quot;: &quot;Int64&quot;
+    },
+    &quot;nulls&quot;: {
+      &quot;match_date&quot;: 0,
+      &quot;home_team&quot;: 0,
+      &quot;away_team&quot;: 0,
+      &quot;home_goals&quot;: 0,
+      &quot;away_goals&quot;: 0,
+      &quot;result&quot;: 0,
+      &quot;home_shots&quot;: 0,
+      &quot;away_shots&quot;: 1,
+      &quot;home_shots_target&quot;: 0,
+      &quot;away_shots_target&quot;: 1,
+      &quot;home_yellows&quot;: 0,
+      &quot;away_yellows&quot;: 0,
+      &quot;home_reds&quot;: 0,
+      &quot;away_reds&quot;: 0,
+      &quot;league_name&quot;: 0,
+      &quot;country&quot;: 0,
+      &quot;season&quot;: 0,
+      &quot;season_code&quot;: 0,
+      &quot;source_file&quot;: 0,
+      &quot;source_row&quot;: 0,
+      &quot;measurement_repair_notes&quot;: 0,
+      &quot;match_id&quot;: 0,
+      &quot;total_goals&quot;: 0,
+      &quot;home_points&quot;: 0,
+      &quot;away_points&quot;: 0,
+      &quot;goal_diff&quot;: 0
+    },
+    &quot;exact_duplicate_rows&quot;: 0,
+    &quot;numeric_summary&quot;: {
+      &quot;home_goals&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.5432705686,
+        &quot;std&quot;: 1.3033090567,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 1.0,
+        &quot;50%&quot;: 1.0,
+        &quot;75%&quot;: 2.0,
+        &quot;max&quot;: 9.0
+      },
+      &quot;away_goals&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.2566552268,
+        &quot;std&quot;: 1.1726171903,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 1.0,
+        &quot;75%&quot;: 2.0,
+        &quot;max&quot;: 9.0
+      },
+      &quot;home_shots&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 13.4081254058,
+        &quot;std&quot;: 5.2285452435,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 10.0,
+        &quot;50%&quot;: 13.0,
+        &quot;75%&quot;: 17.0,
+        &quot;max&quot;: 46.0
+      },
+      &quot;away_shots&quot;: {
+        &quot;count&quot;: 10780.0,
+        &quot;mean&quot;: 11.0748608534,
+        &quot;std&quot;: 4.7147069445,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 8.0,
+        &quot;50%&quot;: 11.0,
+        &quot;75%&quot;: 14.0,
+        &quot;max&quot;: 35.0
+      },
+      &quot;home_shots_target&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 4.887951025,
+        &quot;std&quot;: 2.6363493909,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 3.0,
+        &quot;50%&quot;: 5.0,
+        &quot;75%&quot;: 6.0,
+        &quot;max&quot;: 20.0
+      },
+      &quot;away_shots_target&quot;: {
+        &quot;count&quot;: 10780.0,
+        &quot;mean&quot;: 4.0529684601,
+        &quot;std&quot;: 2.3780538447,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 2.0,
+        &quot;50%&quot;: 4.0,
+        &quot;75%&quot;: 5.0,
+        &quot;max&quot;: 20.0
+      },
+      &quot;home_yellows&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.9542714034,
+        &quot;std&quot;: 1.3754559305,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 1.0,
+        &quot;50%&quot;: 2.0,
+        &quot;75%&quot;: 3.0,
+        &quot;max&quot;: 9.0
+      },
+      &quot;away_yellows&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 2.1763287265,
+        &quot;std&quot;: 1.4066433648,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 1.0,
+        &quot;50%&quot;: 2.0,
+        &quot;75%&quot;: 3.0,
+        &quot;max&quot;: 8.0
+      },
+      &quot;home_reds&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 0.089509322,
+        &quot;std&quot;: 0.3043627584,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 0.0,
+        &quot;75%&quot;: 0.0,
+        &quot;max&quot;: 3.0
+      },
+      &quot;away_reds&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 0.1047212689,
+        &quot;std&quot;: 0.3250188645,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 0.0,
+        &quot;75%&quot;: 0.0,
+        &quot;max&quot;: 2.0
+      },
+      &quot;source_row&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 182.8418514052,
+        &quot;std&quot;: 106.363979945,
+        &quot;min&quot;: 2.0,
+        &quot;25%&quot;: 91.0,
+        &quot;50%&quot;: 181.0,
+        &quot;75%&quot;: 271.0,
+        &quot;max&quot;: 381.0
+      },
+      &quot;total_goals&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 2.7999257954,
+        &quot;std&quot;: 1.6724727547,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 2.0,
+        &quot;50%&quot;: 3.0,
+        &quot;75%&quot;: 4.0,
+        &quot;max&quot;: 10.0
+      },
+      &quot;home_points&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.5551433077,
+        &quot;std&quot;: 1.3189945046,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 1.0,
+        &quot;75%&quot;: 3.0,
+        &quot;max&quot;: 3.0
+      },
+      &quot;away_points&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 1.1911696503,
+        &quot;std&quot;: 1.2835117986,
+        &quot;min&quot;: 0.0,
+        &quot;25%&quot;: 0.0,
+        &quot;50%&quot;: 1.0,
+        &quot;75%&quot;: 3.0,
+        &quot;max&quot;: 3.0
+      },
+      &quot;goal_diff&quot;: {
+        &quot;count&quot;: 10781.0,
+        &quot;mean&quot;: 0.2866153418,
+        &quot;std&quot;: 1.83033495,
+        &quot;min&quot;: -9.0,
+        &quot;25%&quot;: -1.0,
+        &quot;50%&quot;: 0.0,
+        &quot;75%&quot;: 1.0,
+        &quot;max&quot;: 9.0
+      }
+    }
+  },
+  &quot;rejected_rows&quot;: 0,
+  &quot;result_codes_repaired&quot;: 0,
+  &quot;rows_with_measurement_repairs&quot;: 1,
+  &quot;optional_missing&quot;: {
+    &quot;home_goals&quot;: 0,
+    &quot;away_goals&quot;: 0,
+    &quot;home_shots&quot;: 0,
+    &quot;away_shots&quot;: 1,
+    &quot;home_shots_target&quot;: 0,
+    &quot;away_shots_target&quot;: 1,
+    &quot;home_yellows&quot;: 0,
+    &quot;away_yellows&quot;: 0,
+    &quot;home_reds&quot;: 0,
+    &quot;away_reds&quot;: 0
+  },
+  &quot;outlier_rule&quot;: &quot;total_goals &gt; Q3 + 1.5 IQR (7)&quot;,
+  &quot;outliers_retained&quot;: 69,
+  &quot;outlier_policy&quot;: &quot;Flag unusual valid results; reject impossible values. Do not delete real high-scoring matches.&quot;
+}</pre></body></html>

@@ -1,0 +1,649 @@
+{
+  "suite": "football_clean_match_expectations_v1",
+  "status": "FAILED",
+  "rows": 8,
+  "expectations": 45,
+  "passed_expectations": 36,
+  "failed_expectations": 9,
+  "expectation_pass_pct": 80.0,
+  "checks": [
+    {
+      "expectation": "required_columns",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Missing: []; extra provenance fields allowed"
+    },
+    {
+      "expectation": "minimum_row_count",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "8 rows; minimum 1"
+    },
+    {
+      "expectation": "not_null:match_id",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:match_date",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        0
+      ],
+      "samples": [
+        {
+          "match_date": null,
+          "home_team": "Burnley",
+          "away_team": "Man City",
+          "home_goals": "-1",
+          "away_goals": 3,
+          "result": "A",
+          "home_shots": 6,
+          "away_shots": 17,
+          "home_shots_target": 1,
+          "away_shots_target": 8,
+          "home_yellows": 0,
+          "away_yellows": 0,
+          "home_reds": 1,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 2,
+          "measurement_repair_notes": "",
+          "match_id": "65551e0cfdaa5dd611e4cc69",
+          "total_goals": 3,
+          "home_points": 0,
+          "away_points": 3,
+          "goal_diff": -3
+        }
+      ],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:home_team",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        1
+      ],
+      "samples": [
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": null,
+          "away_team": "Nott'm Forest",
+          "home_goals": "2",
+          "away_goals": 1,
+          "result": "H",
+          "home_shots": 15,
+          "away_shots": 6,
+          "home_shots_target": 7,
+          "away_shots_target": 2,
+          "home_yellows": 2,
+          "away_yellows": 2,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 3,
+          "measurement_repair_notes": "",
+          "match_id": "c6fb12722f93bc8974113d18",
+          "total_goals": 3,
+          "home_points": 3,
+          "away_points": 0,
+          "goal_diff": 1
+        }
+      ],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:away_team",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:home_goals",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:away_goals",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:result",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:league_name",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:season",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:season_code",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:source_file",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "not_null:source_row",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "unique:match_id",
+      "passed": false,
+      "failed_rows": 2,
+      "sample_indices": [
+        1,
+        2
+      ],
+      "samples": [
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": null,
+          "away_team": "Nott'm Forest",
+          "home_goals": "2",
+          "away_goals": 1,
+          "result": "H",
+          "home_shots": 15,
+          "away_shots": 6,
+          "home_shots_target": 7,
+          "away_shots_target": 2,
+          "home_yellows": 2,
+          "away_yellows": 2,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 3,
+          "measurement_repair_notes": "",
+          "match_id": "c6fb12722f93bc8974113d18",
+          "total_goals": 3,
+          "home_points": 3,
+          "away_points": 0,
+          "goal_diff": 1
+        },
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": "Bournemouth",
+          "away_team": "West Ham",
+          "home_goals": "1",
+          "away_goals": 1,
+          "result": "D",
+          "home_shots": 14,
+          "away_shots": 16,
+          "home_shots_target": 5,
+          "away_shots_target": 3,
+          "home_yellows": 1,
+          "away_yellows": 4,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 4,
+          "measurement_repair_notes": "",
+          "match_id": "c6fb12722f93bc8974113d18",
+          "total_goals": 2,
+          "home_points": 1,
+          "away_points": 1,
+          "goal_diff": 0
+        }
+      ],
+      "details": ""
+    },
+    {
+      "expectation": "dtype:match_date",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected datetime; actual datetime64[ns]"
+    },
+    {
+      "expectation": "dtype:match_id",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected string; actual object"
+    },
+    {
+      "expectation": "dtype:home_team",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected string; actual string"
+    },
+    {
+      "expectation": "dtype:away_team",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected string; actual string"
+    },
+    {
+      "expectation": "dtype:league_name",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected string; actual string"
+    },
+    {
+      "expectation": "dtype:season",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected string; actual string"
+    },
+    {
+      "expectation": "dtype:season_code",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected string; actual string"
+    },
+    {
+      "expectation": "dtype:home_goals",
+      "passed": false,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual string"
+    },
+    {
+      "expectation": "dtype:away_goals",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual Int64"
+    },
+    {
+      "expectation": "dtype:home_shots",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual Int64"
+    },
+    {
+      "expectation": "dtype:away_shots",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual Int64"
+    },
+    {
+      "expectation": "dtype:home_shots_target",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual Int64"
+    },
+    {
+      "expectation": "dtype:away_shots_target",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual Int64"
+    },
+    {
+      "expectation": "dtype:source_row",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Expected integer; actual int64"
+    },
+    {
+      "expectation": "range:home_goals",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        0
+      ],
+      "samples": [
+        {
+          "match_date": null,
+          "home_team": "Burnley",
+          "away_team": "Man City",
+          "home_goals": "-1",
+          "away_goals": 3,
+          "result": "A",
+          "home_shots": 6,
+          "away_shots": 17,
+          "home_shots_target": 1,
+          "away_shots_target": 8,
+          "home_yellows": 0,
+          "away_yellows": 0,
+          "home_reds": 1,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 2,
+          "measurement_repair_notes": "",
+          "match_id": "65551e0cfdaa5dd611e4cc69",
+          "total_goals": 3,
+          "home_points": 0,
+          "away_points": 3,
+          "goal_diff": -3
+        }
+      ],
+      "details": "Inclusive [0, 20]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:away_goals",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 20]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:home_shots",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 80]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:away_shots",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 80]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:home_shots_target",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 80]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:away_shots_target",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        4
+      ],
+      "samples": [
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": "Everton",
+          "away_team": "Fulham",
+          "home_goals": "0",
+          "away_goals": 1,
+          "result": "A",
+          "home_shots": 19,
+          "away_shots": 9,
+          "home_shots_target": 9,
+          "away_shots_target": 999,
+          "home_yellows": 0,
+          "away_yellows": 2,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 6,
+          "measurement_repair_notes": "",
+          "match_id": "bb345907dd03a1290fcd83ca",
+          "total_goals": 1,
+          "home_points": 0,
+          "away_points": 3,
+          "goal_diff": -1
+        }
+      ],
+      "details": "Inclusive [0, 80]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:home_yellows",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 30]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:away_yellows",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 30]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:home_reds",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 30]; unknown optional values permitted"
+    },
+    {
+      "expectation": "range:away_reds",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": "Inclusive [0, 30]; unknown optional values permitted"
+    },
+    {
+      "expectation": "allowed:result",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        3
+      ],
+      "samples": [
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": "Brighton",
+          "away_team": "Luton",
+          "home_goals": "4",
+          "away_goals": 1,
+          "result": "X",
+          "home_shots": 27,
+          "away_shots": 9,
+          "home_shots_target": 12,
+          "away_shots_target": 3,
+          "home_yellows": 2,
+          "away_yellows": 2,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 5,
+          "measurement_repair_notes": "",
+          "match_id": "368852e9cd9e4ab9b8596480",
+          "total_goals": 5,
+          "home_points": 3,
+          "away_points": 0,
+          "goal_diff": 3
+        }
+      ],
+      "details": ""
+    },
+    {
+      "expectation": "allowed:league_name",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "result_matches_score",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        3
+      ],
+      "samples": [
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": "Brighton",
+          "away_team": "Luton",
+          "home_goals": "4",
+          "away_goals": 1,
+          "result": "X",
+          "home_shots": 27,
+          "away_shots": 9,
+          "home_shots_target": 12,
+          "away_shots_target": 3,
+          "home_yellows": 2,
+          "away_yellows": 2,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 5,
+          "measurement_repair_notes": "",
+          "match_id": "368852e9cd9e4ab9b8596480",
+          "total_goals": 5,
+          "home_points": 3,
+          "away_points": 0,
+          "goal_diff": 3
+        }
+      ],
+      "details": ""
+    },
+    {
+      "expectation": "different_teams",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "home_target_not_above_total",
+      "passed": true,
+      "failed_rows": 0,
+      "sample_indices": [],
+      "samples": [],
+      "details": ""
+    },
+    {
+      "expectation": "away_target_not_above_total",
+      "passed": false,
+      "failed_rows": 1,
+      "sample_indices": [
+        4
+      ],
+      "samples": [
+        {
+          "match_date": "2023-08-12 00:00:00",
+          "home_team": "Everton",
+          "away_team": "Fulham",
+          "home_goals": "0",
+          "away_goals": 1,
+          "result": "A",
+          "home_shots": 19,
+          "away_shots": 9,
+          "home_shots_target": 9,
+          "away_shots_target": 999,
+          "home_yellows": 0,
+          "away_yellows": 2,
+          "home_reds": 0,
+          "away_reds": 0,
+          "league_name": "Premier League",
+          "country": "England",
+          "season": "2023/2024",
+          "season_code": "2324",
+          "source_file": "E0_2324.csv",
+          "source_row": 6,
+          "measurement_repair_notes": "",
+          "match_id": "bb345907dd03a1290fcd83ca",
+          "total_goals": 1,
+          "home_points": 0,
+          "away_points": 3,
+          "goal_diff": -1
+        }
+      ],
+      "details": ""
+    }
+  ],
+  "notes": "Custom declarative expectation suite implemented in Pandas; not the Great Expectations library. Optional measurements may be null; essential fields may not. Required-column constraints permit additional provenance/derived fields."
+}

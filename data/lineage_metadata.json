@@ -1,104 +1,154 @@
 {
-  "generated_at": "2026-10-15T18:05:42.902519Z",
-  "pipeline": "PitchPulse-360-Full-Lifecycle",
+  "generated_at": "2026-10-16T05:56:15.766235+00:00",
+  "pipeline": "PitchPulse360-complete",
   "nodes": [
     {
-      "id": "SRC_STATSBOMB",
-      "label": "StatsBomb GitHub API",
+      "id": "CSV",
+      "label": "Historical league CSVs",
       "type": "Source"
     },
     {
-      "id": "SRC_STREAM",
-      "label": "Kafka Live Match Events",
-      "type": "Source"
+      "id": "CLEAN",
+      "label": "Pandas profile and clean",
+      "type": "Transform"
     },
     {
-      "id": "STAGE_INGEST",
-      "label": "Ingestion & Dead Letter Queue (DLQ)",
-      "type": "Ingestion"
-    },
-    {
-      "id": "LAKE_BRONZE",
-      "label": "Delta Lake: Bronze Layer (Raw Payloads)",
+      "id": "MONGO",
+      "label": "MongoDB original documents",
       "type": "Storage"
     },
     {
-      "id": "VAL_QUALITY",
-      "label": "Great Expectations Quality Suite",
-      "type": "Validation"
-    },
-    {
-      "id": "LAKE_SILVER",
-      "label": "Delta Lake: Silver Layer (Cleaned & Schema Enforced)",
+      "id": "PG",
+      "label": "PostgreSQL normalized matches",
       "type": "Storage"
     },
     {
-      "id": "PROC_DUCKDB",
-      "label": "DuckDB / PySpark Distributed Engine",
+      "id": "OLAP",
+      "label": "PostgreSQL and DuckDB OLAP",
       "type": "Compute"
     },
     {
-      "id": "LAKE_GOLD",
-      "label": "Delta Lake: Gold Star Schema & KPIs",
+      "id": "BRONZE",
+      "label": "Delta Bronze raw snapshot",
       "type": "Storage"
     },
     {
-      "id": "SERV_FASTAPI",
-      "label": "FastAPI Data Product & RBAC",
+      "id": "SILVER",
+      "label": "Delta Silver clean matches",
+      "type": "Storage"
+    },
+    {
+      "id": "GOLD",
+      "label": "Delta Gold calculated standings",
+      "type": "Storage"
+    },
+    {
+      "id": "PLAYERS",
+      "label": "Simulated player positions",
+      "type": "Demonstration"
+    },
+    {
+      "id": "UI",
+      "label": "Streamlit football and engineering pages",
       "type": "Serving"
     },
     {
-      "id": "BI_STREAMLIT",
-      "label": "Streamlit Tactical Match Center",
-      "type": "Analytics"
+      "id": "API",
+      "label": "FastAPI event capture and reads",
+      "type": "Serving"
+    },
+    {
+      "id": "RABBIT",
+      "label": "RabbitMQ durable queues",
+      "type": "Messaging"
+    },
+    {
+      "id": "STAGING",
+      "label": "PostgreSQL event staging and rejections",
+      "type": "Storage"
+    },
+    {
+      "id": "PREFECT",
+      "label": "Prefect scheduled task workflow",
+      "type": "Orchestration"
     }
   ],
   "edges": [
     {
-      "from": "SRC_STATSBOMB",
-      "to": "STAGE_INGEST",
-      "transformation": "HTTP Batch Fetch"
+      "from": "CSV",
+      "to": "CLEAN",
+      "transformation": "profile and validate"
     },
     {
-      "from": "SRC_STREAM",
-      "to": "STAGE_INGEST",
-      "transformation": "Real-Time Kafka Consumer"
+      "from": "CSV",
+      "to": "MONGO",
+      "transformation": "preserve source documents"
     },
     {
-      "from": "STAGE_INGEST",
-      "to": "LAKE_BRONZE",
-      "transformation": "Append Raw JSON"
+      "from": "CSV",
+      "to": "BRONZE",
+      "transformation": "raw snapshot"
     },
     {
-      "from": "LAKE_BRONZE",
-      "to": "VAL_QUALITY",
-      "transformation": "Validate Constraints"
+      "from": "CLEAN",
+      "to": "PG",
+      "transformation": "transactional ETL"
     },
     {
-      "from": "VAL_QUALITY",
-      "to": "LAKE_SILVER",
-      "transformation": "Filtered Clean Stream"
+      "from": "CLEAN",
+      "to": "SILVER",
+      "transformation": "clean snapshot"
     },
     {
-      "from": "LAKE_SILVER",
-      "to": "PROC_DUCKDB",
-      "transformation": "Columnar SQL Transforms"
+      "from": "SILVER",
+      "to": "GOLD",
+      "transformation": "calculate standings"
     },
     {
-      "from": "PROC_DUCKDB",
-      "to": "LAKE_GOLD",
-      "transformation": "Aggregate KPIs & Star Schema"
+      "from": "PG",
+      "to": "OLAP",
+      "transformation": "aggregate and compare"
     },
     {
-      "from": "LAKE_GOLD",
-      "to": "SERV_FASTAPI",
-      "transformation": "Query Serving Layer"
+      "from": "GOLD",
+      "to": "UI",
+      "transformation": "football charts"
     },
     {
-      "from": "SERV_FASTAPI",
-      "to": "BI_STREAMLIT",
-      "transformation": "Tactical Visualization"
+      "from": "OLAP",
+      "to": "UI",
+      "transformation": "saved lab evidence"
+    },
+    {
+      "from": "PLAYERS",
+      "to": "UI",
+      "transformation": "generated heatmaps"
+    },
+    {
+      "from": "GOLD",
+      "to": "API",
+      "transformation": "read summaries"
+    },
+    {
+      "from": "API",
+      "to": "RABBIT",
+      "transformation": "validated event publication"
+    },
+    {
+      "from": "RABBIT",
+      "to": "STAGING",
+      "transformation": "validate, commit, acknowledge"
+    },
+    {
+      "from": "STAGING",
+      "to": "UI",
+      "transformation": "live staging table"
+    },
+    {
+      "from": "PREFECT",
+      "to": "CLEAN",
+      "transformation": "schedule and track tasks"
     }
   ],
-  "mermaid": "graph TD\n    SRC_STATSBOMB[\"StatsBomb GitHub API\"]\n    SRC_STREAM[\"Kafka Live Match Events\"]\n    STAGE_INGEST[\"Ingestion & Dead Letter Queue (DLQ)\"]\n    LAKE_BRONZE[\"Delta Lake: Bronze Layer (Raw Payloads)\"]\n    VAL_QUALITY[\"Great Expectations Quality Suite\"]\n    LAKE_SILVER[\"Delta Lake: Silver Layer (Cleaned & Schema Enforced)\"]\n    PROC_DUCKDB[\"DuckDB / PySpark Distributed Engine\"]\n    LAKE_GOLD[\"Delta Lake: Gold Star Schema & KPIs\"]\n    SERV_FASTAPI[\"FastAPI Data Product & RBAC\"]\n    BI_STREAMLIT[\"Streamlit Tactical Match Center\"]\n    SRC_STATSBOMB -->|HTTP Batch Fetch| STAGE_INGEST\n    SRC_STREAM -->|Real-Time Kafka Consumer| STAGE_INGEST\n    STAGE_INGEST -->|Append Raw JSON| LAKE_BRONZE\n    LAKE_BRONZE -->|Validate Constraints| VAL_QUALITY\n    VAL_QUALITY -->|Filtered Clean Stream| LAKE_SILVER\n    LAKE_SILVER -->|Columnar SQL Transforms| PROC_DUCKDB\n    PROC_DUCKDB -->|Aggregate KPIs & Star Schema| LAKE_GOLD\n    LAKE_GOLD -->|Query Serving Layer| SERV_FASTAPI\n    SERV_FASTAPI -->|Tactical Visualization| BI_STREAMLIT"
+  "mermaid": "graph TD\n    CSV[\"Historical league CSVs\"]\n    CLEAN[\"Pandas profile and clean\"]\n    MONGO[\"MongoDB original documents\"]\n    PG[\"PostgreSQL normalized matches\"]\n    OLAP[\"PostgreSQL and DuckDB OLAP\"]\n    BRONZE[\"Delta Bronze raw snapshot\"]\n    SILVER[\"Delta Silver clean matches\"]\n    GOLD[\"Delta Gold calculated standings\"]\n    PLAYERS[\"Simulated player positions\"]\n    UI[\"Streamlit football and engineering pages\"]\n    API[\"FastAPI event capture and reads\"]\n    RABBIT[\"RabbitMQ durable queues\"]\n    STAGING[\"PostgreSQL event staging and rejections\"]\n    PREFECT[\"Prefect scheduled task workflow\"]\n    CSV -->|profile and validate| CLEAN\n    CSV -->|preserve source documents| MONGO\n    CSV -->|raw snapshot| BRONZE\n    CLEAN -->|transactional ETL| PG\n    CLEAN -->|clean snapshot| SILVER\n    SILVER -->|calculate standings| GOLD\n    PG -->|aggregate and compare| OLAP\n    GOLD -->|football charts| UI\n    OLAP -->|saved lab evidence| UI\n    PLAYERS -->|generated heatmaps| UI\n    GOLD -->|read summaries| API\n    API -->|validated event publication| RABBIT\n    RABBIT -->|validate, commit, acknowledge| STAGING\n    STAGING -->|live staging table| UI\n    PREFECT -->|schedule and track tasks| CLEAN"
 }

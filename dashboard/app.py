@@ -1,12 +1,7 @@
 """
 PitchPulse 360 - Elite European Football Intelligence Platform
-Features:
-- Dynamic Light / Dark Mode Toggle with complete color token synchronization
-- Zero emojis, ultra-refined executive typography & SVG accents
-- Continuous 2D Gaussian KDE pitch heatmaps (Opta/Sofascore standard)
-- Transparent vector pitch markings (no clipping or boxy artifacts)
-- Calibrated attribute radar charts with full margin protection
-- 10,780+ Top 5 European league fixtures & 14,500+ superstar actions
+Historical football results and explicitly labeled player visualization demonstrations.
+The shared UI preserves native Streamlit light/dark behavior.
 """
 
 import streamlit as st
@@ -23,148 +18,16 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Sidebar Theme Switcher
-st.sidebar.markdown("### THEME SELECTOR")
-theme_mode = st.sidebar.radio("Display Theme:", ["Dark Theme", "Light Theme"], horizontal=True)
-is_dark = (theme_mode == "Dark Theme")
-
-# Theme Palette Tokens
-if is_dark:
-    bg_main = "#070d19"
-    text_main = "#f1f5f9"
-    sidebar_bg = "#0c1424"
-    sidebar_border = "#1e293b"
-    sidebar_text = "#e2e8f0"
-    hero_bg = "linear-gradient(135deg, #0f172a 0%, #111e38 50%, #0c1424 100%)"
-    hero_border = "#1e293b"
-    card_bg = "linear-gradient(145deg, #0e172a 0%, #09101d 100%)"
-    card_border = "#1e293b"
-    metric_val_col = "#00f2fe"
-    metric_title_col = "#94a3b8"
-    tabs_bg = "#0c1424"
-    tabs_border = "#1e293b"
-    tab_active_bg = "#1e293b"
-    tab_active_col = "#00f2fe"
-    paper_bg = "#0c1424"
-    plot_bg = "#070d19"
-    pitch_canvas = "#08101f"
-    chart_text = "#f8fafc"
-    grid_color = "#1e293b"
-    pitch_line_color = "rgba(255, 255, 255, 0.85)"
-else:
-    bg_main = "#f8fafc"
-    text_main = "#0f172a"
-    sidebar_bg = "#ffffff"
-    sidebar_border = "#e2e8f0"
-    sidebar_text = "#1e293b"
-    hero_bg = "linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)"
-    hero_border = "#cbd5e1"
-    card_bg = "#ffffff"
-    card_border = "#e2e8f0"
-    metric_val_col = "#0284c7"
-    metric_title_col = "#64748b"
-    tabs_bg = "#e2e8f0"
-    tabs_border = "#cbd5e1"
-    tab_active_bg = "#ffffff"
-    tab_active_col = "#0284c7"
-    paper_bg = "#ffffff"
-    plot_bg = "#f8fafc"
-    pitch_canvas = "#0a3a24" # Deep emerald grass for daylight clarity
-    chart_text = "#0f172a"
-    grid_color = "#e2e8f0"
-    pitch_line_color = "rgba(255, 255, 255, 0.95)"
-
-# Dynamic CSS Injection
-st.markdown(f"""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
-    
-    html, body, [class*="css"], .stApp {{
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background-color: {bg_main} !important;
-        color: {text_main} !important;
-    }}
-    .main {{ background-color: {bg_main}; color: {text_main}; }}
-    
-    header[data-testid="stHeader"] {{
-        background-color: {bg_main} !important;
-    }}
-    
-    section[data-testid="stSidebar"] {{
-        background-color: {sidebar_bg} !important;
-        border-right: 1px solid {sidebar_border} !important;
-    }}
-    
-    section[data-testid="stSidebar"] .stMarkdown, 
-    section[data-testid="stSidebar"] p, 
-    section[data-testid="stSidebar"] span, 
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] div {{
-        color: {sidebar_text};
-    }}
-    
-    .hero-container {{
-        background: {hero_bg};
-        border: 1px solid {hero_border};
-        border-radius: 12px;
-        padding: 22px 28px;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.15);
-    }}
-    
-    .metric-card {{
-        background: {card_bg};
-        border-radius: 10px;
-        padding: 16px 14px;
-        border: 1px solid {card_border};
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }}
-    .metric-title {{
-        color: {metric_title_col};
-        font-size: 0.72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }}
-    .metric-val {{
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 1.85rem;
-        font-weight: 800;
-        color: {metric_val_col};
-        margin-top: 4px;
-        letter-spacing: -0.02em;
-    }}
-    .metric-sub {{
-        font-size: 0.75rem;
-        color: #10b981;
-        margin-top: 3px;
-        font-weight: 500;
-    }}
-
-    .stTabs [data-baseweb="tab-list"] {{
-        gap: 8px;
-        background-color: {tabs_bg};
-        padding: 6px;
-        border-radius: 10px;
-        border: 1px solid {tabs_border};
-    }}
-    .stTabs [data-baseweb="tab"] {{
-        height: 42px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        border-radius: 6px;
-        color: {metric_title_col};
-    }}
-    .stTabs [aria-selected="true"] {{
-        background-color: {tab_active_bg} !important;
-        color: {tab_active_col} !important;
-        border-bottom: 2px solid {tab_active_col} !important;
-    }}
-</style>
-""", unsafe_allow_html=True)
+from dashboard.ui import apply_theme, sidebar, sidebar_footer, topbar, hero, metric_card, chart, footer
+apply_theme()
+sidebar()
+# Let native Streamlit select chart/table colors for the current appearance.
+text_main = "inherit"
+metric_title_col = "inherit"
+metric_val_col = "#11936b"
+chart_text = paper_bg = plot_bg = grid_color = None
+pitch_canvas = "#0a3a24"
+pitch_line_color = "rgba(255, 255, 255, 0.95)"
 
 # Helper function to generate clean pitch boundary lines over heatmaps
 def get_clean_pitch_shapes(line_color):
@@ -186,9 +49,9 @@ def get_clean_pitch_shapes(line_color):
         # 6-Yard box right
         dict(type="rect", x0=114, y0=30, x1=120, y1=50, line=dict(color=sub_color, width=1), fillcolor="rgba(0,0,0,0)", layer="above"),
         # Goal net left
-        dict(type="rect", x0=-2.5, y0=36, x1=0, y1=44, line=dict(color="#00f2fe", width=2.5), fillcolor="rgba(0,0,0,0)", layer="above"),
+        dict(type="rect", x0=-2.5, y0=36, x1=0, y1=44, line=dict(color="#11936b", width=2.5), fillcolor="rgba(0,0,0,0)", layer="above"),
         # Goal net right
-        dict(type="rect", x0=120, y0=36, x1=122.5, y1=44, line=dict(color="#00f2fe", width=2.5), fillcolor="rgba(0,0,0,0)", layer="above")
+        dict(type="rect", x0=120, y0=36, x1=122.5, y1=44, line=dict(color="#11936b", width=2.5), fillcolor="rgba(0,0,0,0)", layer="above")
     ]
 
 # Load Data from Lakehouse
@@ -224,141 +87,115 @@ proc.register_dataframe("gold_standings", df_gold)
 if not df_spatial.empty:
     proc.register_dataframe("player_actions", df_spatial)
 
-# Hero Header (Executive SVG Accent)
-st.markdown(f"""
-<div class="hero-container">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{metric_val_col}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="m4.93 4.93 4.24 4.24"></path>
-                    <path d="m14.83 9.17 4.24-4.24"></path>
-                    <path d="m14.83 14.83 4.24 4.24"></path>
-                    <path d="m9.17 14.83-4.24 4.24"></path>
-                    <circle cx="12" cy="12" r="4"></circle>
-                </svg>
-                <h1 style="margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; color: {text_main};">
-                    PITCHPULSE 360
-                </h1>
-            </div>
-            <p style="margin: 6px 0 0 34px; color: {metric_title_col}; font-size: 0.95rem;">
-                European Football Intelligence & Tactical Heatmap Engine | <b>10,780+ Top 5 League Fixtures</b>
-            </p>
-        </div>
-        <div style="text-align: right;">
-            <span style="background: rgba(16, 185, 129, 0.12); border: 1px solid #10b981; color: #10b981; padding: 6px 14px; border-radius: 6px; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;">
-                ONLINE FEED
-            </span>
-        </div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-# Sidebar Controls
-st.sidebar.markdown("### COMPETITION NAVIGATOR")
+# Archive filters are genuine Streamlit controls, shared with the data queries.
+st.sidebar.markdown('<div class="pp-sidebar-label">Explore a season</div>',unsafe_allow_html=True)
 LEAGUE_OPTIONS = ["Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1"]
 SEASON_OPTIONS = ["2023/2024", "2022/2023", "2021/2022", "2020/2021", "2019/2020", "2018/2019"]
-
-selected_league = st.sidebar.selectbox("Select League:", LEAGUE_OPTIONS, index=0)
-selected_season = st.sidebar.selectbox("Select Season:", SEASON_OPTIONS, index=0)
+selected_league = st.sidebar.selectbox("Competition", LEAGUE_OPTIONS, index=0)
+selected_season = st.sidebar.selectbox("Season", SEASON_OPTIONS, index=0)
+sidebar_footer()
 
 cur_matches = df_silver[(df_silver["league_name"] == selected_league) & (df_silver["season"] == selected_season)]
 cur_standings = proc.get_standings(selected_league, selected_season)
 
-# Top KPI Strip
-c1, c2, c3, c4 = st.columns(4)
-with c1:
-    st.markdown(f"""<div class="metric-card"><div class="metric-title">Season Fixtures</div><div class="metric-val">{len(cur_matches):,}</div><div class="metric-sub">{selected_league} ({selected_season})</div></div>""", unsafe_allow_html=True)
-with c2:
+topbar()
+hero(selected_league, selected_season, len(cur_matches))
+st.markdown('<div class="pp-section-eyebrow">The season at a glance</div>',unsafe_allow_html=True)
+with st.container(key="overview-metrics"):
+    c1, c2, c3, c4 = st.columns(4)
     tot_goals = cur_matches["total_goals"].sum()
     avg_goals = round(tot_goals / max(len(cur_matches), 1), 2)
-    st.markdown(f"""<div class="metric-card"><div class="metric-title">Total Goals</div><div class="metric-val">{tot_goals:,}</div><div class="metric-sub">{avg_goals} Goals / Game</div></div>""", unsafe_allow_html=True)
-with c3:
     home_win_pct = round((len(cur_matches[cur_matches["result"] == "H"]) / max(len(cur_matches), 1)) * 100, 1)
-    st.markdown(f"""<div class="metric-card"><div class="metric-title">Home Win Rate</div><div class="metric-val">{home_win_pct}%</div><div class="metric-sub">Home Pitch Advantage</div></div>""", unsafe_allow_html=True)
-with c4:
     champ = cur_standings.iloc[0]["team"] if not cur_standings.empty else "TBD"
     champ_pts = cur_standings.iloc[0]["points"] if not cur_standings.empty else "-"
-    st.markdown(f"""<div class="metric-card"><div class="metric-title">Champions</div><div class="metric-val" style="color:#facc15;">{champ}</div><div class="metric-sub">{champ_pts} Points</div></div>""", unsafe_allow_html=True)
-
-st.write("")
+    with c1: metric_card("Matches played", f"{len(cur_matches):,}", selected_season)
+    with c2: metric_card("Goals scored", f"{tot_goals:,}", f"{avg_goals} per match")
+    with c3: metric_card("Home win rate", f"{home_win_pct}%", "Wins on home ground")
+    with c4: metric_card("Table leader", champ, f"{champ_pts} calculated points", club=True)
 
 # Main Studio Tabs
 tab_standings, tab_players, tab_relegation, tab_h2h, tab_records = st.tabs([
-    "STANDINGS & TITLE RACE",
-    "PLAYER ANALYTICS & HEATMAPS",
-    "RELEGATION DYNAMICS",
-    "HEAD-TO-HEAD MATRIX",
-    "ALL-TIME RECORDS"
+    "Overview",
+    "Player studio",
+    "Relegation",
+    "Head-to-head",
+    "Season records"
 ])
 
 # ====================================================================
 # TAB 1: STANDINGS & TITLE RACE
 # ====================================================================
 with tab_standings:
-    st.subheader(f"{selected_league} Table ({selected_season})")
+    st.subheader("League standings")
+    st.caption("Calculated from included results. Official points deductions, league-specific tie-breaks and qualification exceptions are not fully modeled.")
     
-    col_t1, col_t2 = st.columns([1.3, 1.2])
+    with st.container(key="standings-grid"):
+        col_t1, col_t2 = st.columns([1.4, 1])
 
-    with col_t1:
-        clean_standings = cur_standings.copy()
-        clean_standings["qualification"] = clean_standings["status"].apply(
-            lambda x: "Champion" if "Champion" in x else (
-                "UEFA Champions League" if "Champions League" in x else (
-                    "UEFA Europa League" if "Europa" in x else (
-                        "Relegated" if "Relegated" in x else "Mid Table"
+        with col_t1:
+            clean_standings = cur_standings.copy()
+            clean_standings["qualification"] = clean_standings["status"].apply(
+                lambda x: "Champion" if str(x).startswith("Champion ") else (
+                    "UEFA Champions League" if "Champions League" in x else (
+                        "UEFA Europa League" if "Europa" in x else (
+                            "Relegated" if "Relegated" in x else "Mid Table"
+                        )
                     )
                 )
             )
-        )
 
-        st.dataframe(
-            clean_standings[["position", "team", "played", "won", "drawn", "lost", "goals_for", "goals_against", "goal_diff", "points", "qualification"]],
-            column_config={
-                "position": st.column_config.NumberColumn("Pos", width="small"),
-                "team": st.column_config.TextColumn("Club", width="medium"),
-                "played": "P", "won": "W", "drawn": "D", "lost": "L",
-                "goals_for": "GF", "goals_against": "GA", "goal_diff": "GD",
-                "points": st.column_config.NumberColumn("PTS", width="small"),
-                "qualification": "Status"
-            },
-            hide_index=True,
-            use_container_width=True
-        )
+            st.dataframe(
+                clean_standings[["position", "team", "played", "won", "drawn", "lost", "goals_for", "goals_against", "goal_diff", "points", "qualification"]],
+                column_config={
+                    "position": st.column_config.NumberColumn("Pos", width=40),
+                    "team": st.column_config.TextColumn("Club", width=140),
+                    "played": st.column_config.NumberColumn("P", width=40),
+                    "won": st.column_config.NumberColumn("W", width=40),
+                    "drawn": st.column_config.NumberColumn("D", width=40),
+                    "lost": st.column_config.NumberColumn("L", width=40),
+                    "goals_for": "GF", "goals_against": "GA", "goal_diff": "GD",
+                    "points": st.column_config.NumberColumn("PTS", width=50),
+                    "qualification": "Status"
+                },
+                column_order=["position", "team", "played", "won", "drawn", "lost", "goal_diff", "points"],
+                hide_index=True,
+                width="stretch",
+                height=560
+            )
 
-    with col_t2:
-        colors = []
-        for s in clean_standings["qualification"]:
-            if s == "Champion": colors.append("#facc15") # Gold
-            elif s == "UEFA Champions League": colors.append("#00f2fe") # Cyan
-            elif s == "UEFA Europa League": colors.append("#f97316") # Orange
-            elif s == "Relegated": colors.append("#ef4444") # Red
-            else: colors.append("#64748b" if is_dark else "#94a3b8")
+        with col_t2:
+            st.markdown('<div class="pp-legend"><span style="--swatch:#c4a249">Leader</span><span style="--swatch:#11936b">European places</span><span style="--swatch:#c66565">Bottom three</span></div>',unsafe_allow_html=True)
+            colors = []
+            for s in clean_standings["qualification"]:
+                if s == "Champion": colors.append("#c4a249") # Gold
+                elif s == "UEFA Champions League": colors.append("#11936b") # Cyan
+                elif s == "UEFA Europa League": colors.append("#6c9f8d") # Orange
+                elif s == "Relegated": colors.append("#c66565") # Red
+                else: colors.append("#9baba5")
 
-        fig_bar = go.Figure(go.Bar(
-            x=clean_standings["points"],
-            y=clean_standings["team"],
-            orientation="h",
-            marker=dict(color=colors),
-            text=clean_standings["points"],
-            textposition="outside",
-            textfont=dict(color=chart_text, size=11)
-        ))
-        fig_bar.update_layout(
-            title=dict(text=f"Points Distribution ({selected_league})", font=dict(color=chart_text, size=14)),
-            yaxis=dict(autorange="reversed", tickfont=dict(color=chart_text)),
-            xaxis=dict(title=dict(text="Points Total", font=dict(color=metric_title_col)), gridcolor=grid_color),
-            paper_bgcolor=paper_bg,
-            plot_bgcolor=plot_bg,
-            font=dict(color=chart_text),
-            margin=dict(l=10, r=25, t=40, b=10),
-            height=540
-        )
-        st.plotly_chart(fig_bar, use_container_width=True)
+            fig_bar = go.Figure(go.Bar(
+                x=clean_standings["points"],
+                y=clean_standings["team"],
+                orientation="h",
+                marker=dict(color=colors),
+                text=clean_standings["points"],
+                textposition="outside",
+                textfont=dict(color=chart_text, size=11)
+            ))
+            fig_bar.update_layout(
+                title=dict(text=f"Points Distribution ({selected_league})", font=dict(color=chart_text, size=14)),
+                yaxis=dict(autorange="reversed", tickfont=dict(color=chart_text)),
+                xaxis=dict(title=dict(text="Points Total", font=dict(color=chart_text)), gridcolor=grid_color),
+                paper_bgcolor=paper_bg,
+                plot_bgcolor=plot_bg,
+                font=dict(color=chart_text),
+                margin=dict(l=10, r=25, t=40, b=10),
+                height=560
+            )
+            chart(fig_bar)
 
     st.write("---")
-    st.subheader("Goal Matrix: Offensive Firepower vs Defensive Solidity")
+    st.subheader("Attack meets defence")
     avg_gf = clean_standings["goals_for"].mean()
     avg_ga = clean_standings["goals_against"].mean()
 
@@ -370,7 +207,7 @@ with tab_standings:
         size="points",
         color="points",
         color_continuous_scale="Tealgrn",
-        title="Attacking Output vs Defensive Vulnerability (Bubble Size = Points Total)",
+        title="Goals scored and conceded · bubble size shows points",
         labels={"goals_for": "Goals Scored", "goals_against": "Goals Conceded"}
     )
     fig_quad.add_vline(x=avg_gf, line_dash="dash", line_color="#64748b", annotation_text="League Avg GF", annotation_font_color=chart_text)
@@ -381,14 +218,14 @@ with tab_standings:
         yaxis=dict(autorange="reversed", gridcolor=grid_color),
         xaxis=dict(gridcolor=grid_color)
     )
-    st.plotly_chart(fig_quad, use_container_width=True)
+    chart(fig_quad)
 
 # ====================================================================
 # TAB 2: PLAYER ANALYTICS & TACTICAL HEATMAPS
 # ====================================================================
 with tab_players:
-    st.subheader("Superstar Spatial Analytics & Tactical Radar")
-    st.caption("Granular tactical pitch data covering top European performers (2023–2024 Season).")
+    st.subheader("Player studio")
+    st.caption("Demonstration: pitch positions are computer-generated; player summary numbers are manually entered. They are not recorded player movements or a complete season dataset.")
 
     col_f1, col_f2 = st.columns([1, 2])
     with col_f1:
@@ -449,7 +286,7 @@ with tab_players:
                     x=np.linspace(0, 120, 120),
                     y=np.linspace(0, 80, 80),
                     z=z.T,
-                    colorscale="Inferno" if is_dark else "YlOrRd",
+                    colorscale="Inferno",
                     opacity=0.82,
                     showscale=False,
                     hoverinfo="skip"
@@ -489,7 +326,7 @@ with tab_players:
                 fig_heat.add_trace(go.Scatter(
                     x=shots["x"], y=shots["y"],
                     mode="markers",
-                    marker=dict(size=shots["xg"] * 22 + 7, color="#f59e0b", symbol="circle", line=dict(color="#ffffff", width=1)),
+                    marker=dict(size=shots["xg"] * 22 + 7, color="#c4a249", symbol="circle", line=dict(color="#ffffff", width=1)),
                     text=[f"Shot ({x:.2f} xG) in Min {m}'" for x, m in zip(shots["xg"], shots["minute"])],
                     hoverinfo="text",
                     name="Shot"
@@ -519,7 +356,7 @@ with tab_players:
             margin=dict(l=8, r=8, t=8, b=8),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, font=dict(size=11, color=chart_text))
         )
-        st.plotly_chart(fig_heat, use_container_width=True)
+        chart(fig_heat)
 
     with col_radar:
         st.markdown(f"#### Tactical Profile: **{selected_player}**")
@@ -546,14 +383,14 @@ with tab_players:
             r=radar_vals,
             theta=radar_cats,
             fill='toself',
-            fillcolor='rgba(0, 242, 254, 0.25)' if is_dark else 'rgba(2, 132, 199, 0.2)',
+            fillcolor='rgba(59, 130, 246, 0.2)',
             line=dict(color=metric_val_col, width=2.2),
             marker=dict(color='#10b981', size=5)
         ))
         fig_rad.update_layout(
             polar=dict(
                 bgcolor=paper_bg,
-                radialaxis=dict(visible=True, range=[40, 100], showline=False, gridcolor=grid_color, tickfont=dict(color=metric_title_col, size=9)),
+                radialaxis=dict(visible=True, range=[40, 100], showline=False, gridcolor=grid_color, tickfont=dict(color=chart_text, size=9)),
                 angularaxis=dict(gridcolor=grid_color, linecolor=grid_color, tickfont=dict(color=chart_text, size=10))
             ),
             paper_bgcolor=paper_bg,
@@ -563,10 +400,10 @@ with tab_players:
             showlegend=False,
             height=440
         )
-        st.plotly_chart(fig_rad, use_container_width=True)
+        chart(fig_rad)
 
     st.write("---")
-    st.subheader("Top European Goalscorers & Playmakers")
+    st.subheader("Player profiles")
     st.dataframe(
         filtered_players_df[["name", "team", "league", "pos", "goals", "assists", "xg", "xa", "xg_diff", "shot_acc_pct", "conversion_pct", "passes"]],
         column_config={
@@ -575,15 +412,15 @@ with tab_players:
             "xg_diff": "xG Diff (+/-)", "shot_acc_pct": "Shot Acc %", "conversion_pct": "Conv %", "passes": "Passes"
         },
         hide_index=True,
-        use_container_width=True
+        width="stretch"
     )
 
 # ====================================================================
 # TAB 3: RELEGATION DYNAMICS
 # ====================================================================
 with tab_relegation:
-    st.subheader(f"Multi-Year Relegation Dynamics: {selected_league}")
-    st.caption("The Survival Line: Points required by the 17th-placed club to avoid the drop over 6 seasons.")
+    st.subheader(f"The relegation picture · {selected_league}")
+    st.caption("Illustrative bottom-three comparison across six seasons. Actual relegation and playoff rules vary by league and season.")
 
     survival_records = []
     for s in SEASON_OPTIONS:
@@ -620,7 +457,7 @@ with tab_relegation:
             yaxis=dict(gridcolor=grid_color, title="Points Total"),
             xaxis=dict(gridcolor=grid_color)
         )
-        st.plotly_chart(fig_surv, use_container_width=True)
+        chart(fig_surv)
 
     with col_s2:
         st.markdown(f"**Relegated Clubs Archive ({selected_league}):**")
@@ -629,14 +466,14 @@ with tab_relegation:
             rel_archive[["season", "position", "team", "points", "goal_diff"]],
             column_config={"season": "Season", "position": "Pos", "team": "Club", "points": "Pts", "goal_diff": "GD"},
             hide_index=True,
-            use_container_width=True
+            width="stretch"
         )
 
 # ====================================================================
 # TAB 4: HEAD-TO-HEAD MATRIX
 # ====================================================================
 with tab_h2h:
-    st.subheader("Head-to-Head Clash & Historical Rivalries")
+    st.subheader("Head-to-head")
     
     league_clubs = sorted(list(set(df_silver[df_silver["league_name"] == selected_league]["home_team"])))
     
@@ -664,12 +501,12 @@ with tab_h2h:
                 names=[f"{club1} Wins", "Draws", f"{club2} Wins"],
                 values=[sum_h2h["team1_wins"], sum_h2h["draws"], sum_h2h["team2_wins"]],
                 color=[f"{club1} Wins", "Draws", f"{club2} Wins"],
-                color_discrete_map={f"{club1} Wins": "#00f2fe", "Draws": "#64748b", f"{club2} Wins": "#f59e0b"},
+                color_discrete_map={f"{club1} Wins": "#11936b", "Draws": "#64748b", f"{club2} Wins": "#c4a249"},
                 hole=0.45,
                 title=f"Win Ratio: {club1} vs {club2}"
             )
             fig_pie.update_layout(paper_bgcolor=paper_bg, font=dict(color=chart_text))
-            st.plotly_chart(fig_pie, use_container_width=True)
+            chart(fig_pie)
 
         with ch2:
             st.markdown(f"**Match-by-Match History:**")
@@ -677,7 +514,7 @@ with tab_h2h:
                 m_h2h[["match_date", "season", "home_team", "home_goals", "away_goals", "away_team", "result"]],
                 column_config={"match_date": "Date", "season": "Season", "home_team": "Home", "home_goals": "HG", "away_goals": "AG", "away_team": "Away", "result": "Result"},
                 hide_index=True,
-                use_container_width=True
+                width="stretch"
             )
 
     st.write("---")
@@ -686,21 +523,21 @@ with tab_h2h:
     if not traj.empty:
         col_tr1, col_tr2 = st.columns(2)
         with col_tr1:
-            fig_tp = px.line(traj, x="season", y="points", markers=True, text="points", title=f"{club1} Points Trend", color_discrete_sequence=["#00f2fe" if is_dark else "#0284c7"])
+            fig_tp = px.line(traj, x="season", y="points", markers=True, text="points", title=f"{club1} Points Trend", color_discrete_sequence=["#11936b"])
             fig_tp.update_traces(textposition="top center")
             fig_tp.update_layout(paper_bgcolor=paper_bg, plot_bgcolor=plot_bg, font=dict(color=chart_text), yaxis=dict(gridcolor=grid_color))
-            st.plotly_chart(fig_tp, use_container_width=True)
+            chart(fig_tp)
         with col_tr2:
             fig_tpos = px.line(traj, x="season", y="position", markers=True, text="position", title=f"{club1} Final League Finish (1st = Top)", color_discrete_sequence=["#10b981"])
             fig_tpos.update_traces(textposition="top center")
             fig_tpos.update_layout(paper_bgcolor=paper_bg, plot_bgcolor=plot_bg, font=dict(color=chart_text), yaxis=dict(autorange="reversed", gridcolor=grid_color))
-            st.plotly_chart(fig_tpos, use_container_width=True)
+            chart(fig_tpos)
 
 # ====================================================================
 # TAB 5: ALL-TIME RECORDS
 # ====================================================================
 with tab_records:
-    st.subheader("All-Time European Records Across 10,780+ Matches")
+    st.subheader("Records from the archive")
     
     col_rec1, col_rec2 = st.columns([1.2, 1])
     with col_rec1:
@@ -710,7 +547,7 @@ with tab_records:
             thrillers[["match_date", "league_name", "season", "home_team", "scoreline", "away_team", "total_goals"]],
             column_config={"match_date": "Date", "league_name": "League", "season": "Season", "home_team": "Home", "scoreline": "Score", "away_team": "Away", "total_goals": "Goals"},
             hide_index=True,
-            use_container_width=True
+            width="stretch"
         )
 
     with col_rec2:
@@ -731,11 +568,13 @@ with tab_records:
             y=["Home Win %", "Draw %", "Away Win %"],
             barmode="stack",
             title="Result Distribution (Top 5 Leagues)",
-            color_discrete_map={"Home Win %": "#00f2fe" if is_dark else "#0284c7", "Draw %": "#64748b", "Away Win %": "#f59e0b"}
+            color_discrete_map={"Home Win %": "#11936b", "Draw %": "#64748b", "Away Win %": "#c4a249"}
         )
         fig_ha.update_layout(paper_bgcolor=paper_bg, plot_bgcolor=plot_bg, font=dict(color=chart_text))
-        st.plotly_chart(fig_ha, use_container_width=True)
+        chart(fig_ha)
 
     st.write("---")
     st.subheader("Roll of Honor: Every Champion Across Europe (2018–2024)")
-    st.dataframe(proc.get_all_champions(), use_container_width=True)
+    st.dataframe(proc.get_all_champions(), width="stretch")
+
+footer()

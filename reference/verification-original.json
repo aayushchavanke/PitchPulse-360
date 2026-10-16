@@ -1,0 +1,9 @@
+{
+  "matches": 10781,
+  "total_goals": 30186,
+  "team_seasons": 586,
+  "league_seasons": 30,
+  "player_profiles": 34,
+  "simulated_actions": 5741,
+  "checks": "Row counts, duplicates, standings arithmetic, aggregate reconciliation, champion query, API handler and masking checks passed. API handler checks are in-process, not HTTP integration tests."
+}

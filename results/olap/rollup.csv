@@ -1,0 +1,37 @@
+league_name,season_code,matches,goals,all_leagues,all_seasons
+Bundesliga,1819,306,973.0,0,0
+Bundesliga,1920,306,982.0,0,0
+Bundesliga,2021,306,928.0,0,0
+Bundesliga,2122,306,954.0,0,0
+Bundesliga,2223,306,971.0,0,0
+Bundesliga,2324,306,985.0,0,0
+La Liga,1819,380,983.0,0,0
+La Liga,1920,380,942.0,0,0
+La Liga,2021,380,953.0,0,0
+La Liga,2122,380,951.0,0,0
+La Liga,2223,380,955.0,0,0
+La Liga,2324,380,1005.0,0,0
+Ligue 1,1819,380,972.0,0,0
+Ligue 1,1920,279,704.0,0,0
+Ligue 1,2021,380,1049.0,0,0
+Ligue 1,2122,380,1067.0,0,0
+Ligue 1,2223,380,1067.0,0,0
+Ligue 1,2324,306,826.0,0,0
+Premier League,1819,380,1072.0,0,0
+Premier League,1920,380,1034.0,0,0
+Premier League,2021,380,1024.0,0,0
+Premier League,2122,380,1071.0,0,0
+Premier League,2223,380,1084.0,0,0
+Premier League,2324,380,1246.0,0,0
+Serie A,1819,380,1019.0,0,0
+Serie A,1920,380,1154.0,0,0
+Serie A,2021,380,1160.0,0,0
+Serie A,2122,380,1089.0,0,0
+Serie A,2223,380,974.0,0,0
+Serie A,2324,380,992.0,0,0
+Bundesliga,,1836,5793.0,0,1
+La Liga,,2280,5789.0,0,1
+Ligue 1,,2105,5685.0,0,1
+Premier League,,2280,6531.0,0,1
+Serie A,,2280,6388.0,0,1
+,,10781,30186.0,1,1

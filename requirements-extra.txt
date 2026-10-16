@@ -1,0 +1,4 @@
+# Prefect 3.4.25 imports the backport on Python 3.12 as well.
+importlib-metadata==8.7.0
+# SQLAlchemy 2.1 changes bulk DML behavior used by this Prefect release's scheduler.
+SQLAlchemy==2.0.43

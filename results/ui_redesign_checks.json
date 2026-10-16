@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "Football dashboard presentation and wording; extra evidence UI removed; pipeline implementations preserved",
+  "automated": [
+    "Football dashboard loads; all five tabs and league/season interactions pass",
+    "Default standings contain one Champion and three UEFA Champions League rows",
+    "Single football dashboard; removed page and navigation are absent"
+  ],
+  "browser": [
+    "Desktop 1440x1000: four aligned metric cards, no document overflow",
+    "Mobile 390x844: two-column cards, no document overflow",
+    "Native Light and Dark: readable widgets, tables and charts",
+    "Appearance instructions display correctly without mojibake"
+  ],
+  "appearance_text": "Open the top-right menu, select Settings, then Theme. Choose Light, Dark or your system setting."
+}

@@ -1,0 +1,53 @@
+{
+  "id": "1cfde806-f4f7-4514-94bf-7eba96a033a8",
+  "created": "2026-10-15T19:34:22.066696Z",
+  "updated": "2026-10-15T20:09:34.693Z",
+  "name": "football-hourly",
+  "version": "e5008f92ad077b1f7f9cf4c6c3bcdaf3",
+  "description": null,
+  "flow_id": "e886669d-d8bb-4f51-a549-e621bd118915",
+  "paused": false,
+  "schedules": [
+    {
+      "id": "99e1933b-a3ed-4a32-a8fd-edc648867682",
+      "created": "2026-10-15T20:09:34.708678Z",
+      "updated": "2026-10-15T20:09:34.708691Z",
+      "deployment_id": "1cfde806-f4f7-4514-94bf-7eba96a033a8",
+      "schedule": {
+        "interval": 3600.0,
+        "anchor_date": "2026-10-15T20:09:34.555854Z",
+        "timezone": "UTC"
+      },
+      "active": true,
+      "max_scheduled_runs": null,
+      "parameters": {},
+      "slug": null
+    }
+  ],
+  "concurrency_limit": null,
+  "global_concurrency_limit": null,
+  "concurrency_options": null,
+  "job_variables": {},
+  "parameters": {},
+  "tags": [],
+  "labels": {
+    "prefect.flow.id": "e886669d-d8bb-4f51-a549-e621bd118915"
+  },
+  "work_queue_name": null,
+  "last_polled": "2026-10-15T20:09:17.034768Z",
+  "parameter_openapi_schema": {
+    "title": "Parameters",
+    "type": "object",
+    "properties": {}
+  },
+  "path": ".",
+  "pull_steps": null,
+  "entrypoint": "platform_lab/flow.py:football_flow",
+  "storage_document_id": null,
+  "infrastructure_document_id": null,
+  "created_by": null,
+  "updated_by": null,
+  "work_pool_name": null,
+  "status": "READY",
+  "enforce_parameter_schema": true
+}

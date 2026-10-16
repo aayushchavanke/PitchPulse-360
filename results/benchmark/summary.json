@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "source": "Clean historical fixtures repeated for scaling, not additional real matches",
+  "original_matches": 10781,
+  "benchmark_rows": 250000,
+  "warmups": 1,
+  "runs_per_mode": 5,
+  "modes": [
+    {
+      "storage": "CSV",
+      "threads": 1,
+      "median_ms": 184.714,
+      "min_ms": 145.755,
+      "max_ms": 200.047,
+      "runs": 5,
+      "answers_match": true
+    },
+    {
+      "storage": "Parquet",
+      "threads": 1,
+      "median_ms": 172.317,
+      "min_ms": 166.079,
+      "max_ms": 178.849,
+      "runs": 5,
+      "answers_match": true
+    },
+    {
+      "storage": "DuckDB",
+      "threads": 1,
+      "median_ms": 8.186,
+      "min_ms": 6.985,
+      "max_ms": 9.349,
+      "runs": 5,
+      "answers_match": true
+    },
+    {
+      "storage": "CSV",
+      "threads": 4,
+      "median_ms": 162.226,
+      "min_ms": 152.814,
+      "max_ms": 182.006,
+      "runs": 5,
+      "answers_match": true
+    },
+    {
+      "storage": "Parquet",
+      "threads": 4,
+      "median_ms": 124.559,
+      "min_ms": 112.203,
+      "max_ms": 139.196,
+      "runs": 5,
+      "answers_match": true
+    },
+    {
+      "storage": "DuckDB",
+      "threads": 4,
+      "median_ms": 9.236,
+      "min_ms": 8.187,
+      "max_ms": 10.182,
+      "runs": 5,
+      "answers_match": true
+    }
+  ],
+  "sizes": {
+    "csv_bytes": 8150325,
+    "parquet_bytes": 70281,
+    "duckdb_bytes": 2895872
+  },
+  "all_answers_match": true,
+  "filtered_parquet_matches_native": true,
+  "interpretation": "One machine; 1/4 are DuckDB thread limits, not computers or a guarantee every query uses four workers. CSV, Parquet and native tables contain identical prepared rows. Warm-cache medians are local observations; four threads may be slower. Native database size includes database metadata."
+}

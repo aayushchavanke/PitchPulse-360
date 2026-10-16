@@ -39,7 +39,7 @@ class DuckDBProcessor:
             return df
         return pd.DataFrame()
 
-    def load_player_spatial_data(self, parquet_path: str = "data/lakehouse/player_spatial_actions.parquet") -> int:
+    def load_player_spatial_data(self, parquet_path: str = "data/lakehouse/player_spatial_telemetry.parquet") -> int:
         if os.path.exists(parquet_path):
             df = pd.read_parquet(parquet_path)
             self.register_dataframe("player_actions", df)
@@ -50,10 +50,10 @@ class DuckDBProcessor:
         query = f"""
         SELECT position, team, played, won, drawn, lost, goals_for, goals_against, goal_diff, points, status
         FROM gold_standings
-        WHERE league_name = '{league_name}' AND season = '{season}'
+        WHERE league_name = ? AND season = ?
         ORDER BY position ASC;
         """
-        return self.conn.execute(query).df()
+        return self.conn.execute(query, [league_name, season]).df()
 
     def get_all_champions(self) -> pd.DataFrame:
         query = """
@@ -68,19 +68,19 @@ class DuckDBProcessor:
         query = f"""
         SELECT season, position, team, points, goal_diff, status
         FROM gold_standings
-        WHERE league_name = '{league_name}' AND status LIKE '%Relegated%'
+        WHERE league_name = ? AND status LIKE '%Relegated%'
         ORDER BY season DESC, position ASC;
         """
-        return self.conn.execute(query).df()
+        return self.conn.execute(query, [league_name]).df()
 
     def get_team_trajectory(self, team_name: str) -> pd.DataFrame:
         query = f"""
         SELECT season, league_name, position, points, won, drawn, lost, goals_for, goals_against, goal_diff, status
         FROM gold_standings
-        WHERE team = '{team_name}'
+        WHERE team = ?
         ORDER BY season ASC;
         """
-        return self.conn.execute(query).df()
+        return self.conn.execute(query, [team_name]).df()
 
     def get_head_to_head(self, team1: str, team2: str) -> Dict[str, Any]:
         query = f"""
@@ -89,11 +89,11 @@ class DuckDBProcessor:
             home_team, away_team, home_goals, away_goals, result,
             home_shots, away_shots
         FROM silver_matches
-        WHERE (home_team = '{team1}' AND away_team = '{team2}')
-           OR (home_team = '{team2}' AND away_team = '{team1}')
+        WHERE (home_team = ? AND away_team = ?)
+           OR (home_team = ? AND away_team = ?)
         ORDER BY season DESC, match_date DESC;
         """
-        df_matches = self.conn.execute(query).df()
+        df_matches = self.conn.execute(query, [team1, team2, team2, team1]).df()
 
         if df_matches.empty:
             return {"matches": pd.DataFrame(), "summary": {}}
@@ -155,12 +155,12 @@ class DuckDBProcessor:
     def get_player_spatial_events(self, player_name: str) -> pd.DataFrame:
         """Returns all spatial coordinates for a player."""
         query = f"""
-        SELECT x, y, event_type, minute, period, xg, shot_outcome, is_pass, is_shot, is_goal
+        SELECT x, y, event_type, minute, xg, shot_outcome, is_pass, is_shot, is_goal
         FROM player_actions
-        WHERE player_name = '{player_name}'
-        ORDER BY period, minute;
+        WHERE player_name = ?
+        ORDER BY minute;
         """
-        return self.conn.execute(query).df()
+        return self.conn.execute(query, [player_name]).df()
 
     def get_player_radar_attributes(self, player_name: str) -> Dict[str, float]:
         """
@@ -180,9 +180,9 @@ class DuckDBProcessor:
             SUM(is_pass) AS passes,
             SUM(CASE WHEN x >= 80 THEN 1 ELSE 0 END) AS final_third_touches
         FROM player_actions
-        WHERE player_name = '{player_name}';
+        WHERE player_name = ?;
         """
-        res = self.conn.execute(query).df().iloc[0]
+        res = self.conn.execute(query, [player_name]).df().iloc[0]
         
         actions = float(res["actions"])
         shots = float(res["shots"])
